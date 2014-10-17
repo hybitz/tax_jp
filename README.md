@@ -1,6 +1,6 @@
 # TaxJp
 
-TODO: Write a gem description
+消費税計算ライブラリ
 
 ## Installation
 
