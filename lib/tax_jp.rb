@@ -1,5 +1,7 @@
 require "tax_jp/version"
+require 'tax_jp/engine'
+require 'tax_jp/railtie'
 
 module TaxJp
-  # Your code goes here...
+  extend TaxJp::Calculation
 end
