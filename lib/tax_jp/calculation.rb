@@ -1,7 +1,7 @@
 module TaxJp
   module Calculation
   
-    def self.get_rate_on(date, options = {})
+    def get_rate_on(date, options = {})
       if (date.is_a?(String))
         date = Date.parse(date)
       end
