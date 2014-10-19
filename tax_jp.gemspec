@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.email         = ["ichylinux@gmail.com"]
   spec.summary       = %q{消費税計算ライブラリ}
   spec.description   = %q{消費税計算ライブラリ}
-  spec.homepage      = ""
-  spec.license       = "MIT"
+  spec.homepage      = 'https://github.com/hybitz/tax_jp'
+  spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
