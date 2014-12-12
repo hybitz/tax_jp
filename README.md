@@ -1,6 +1,8 @@
 # TaxJp
 
 税金計算ライブラリ
+* 消費税
+* 健康保険
 
 ## Installation
 
