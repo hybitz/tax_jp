@@ -1,5 +1,5 @@
 module TaxJp
-  module Calculation
+  module ConsumptionTax
   
     def get_rate_on(date, options = {})
       if (date.is_a?(String))

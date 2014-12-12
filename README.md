@@ -1,6 +1,6 @@
 # TaxJp
 
-消費税計算ライブラリ
+税金計算ライブラリ
 
 ## Installation
 

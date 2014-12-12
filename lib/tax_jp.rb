@@ -1,8 +1,12 @@
 require 'tax_jp/version'
 require 'tax_jp/const'
-require 'tax_jp/engine'
-require 'tax_jp/railtie'
+
+if defined?(Rails)
+  require 'tax_jp/rails/engine'
+  require 'tax_jp/rails/railtie'
+end
 
 module TaxJp
-  extend TaxJp::Calculation
+  require 'tax_jp/consumption_tax'
+  extend TaxJp::ConsumptionTax
 end
