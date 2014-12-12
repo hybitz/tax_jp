@@ -5,8 +5,8 @@ require 'tax_jp/version'
 Gem::Specification.new do |spec|
   spec.name          = "tax_jp"
   spec.version       = TaxJp::VERSION
-  spec.authors       = ["ichy"]
-  spec.email         = ["ichylinux@gmail.com"]
+  spec.authors       = ['ichylinux', 'hyzhiro']
+  spec.email         = ['ichylinux@gmail.com', 'hiroyuki@hybitz.co.jp']
   spec.summary       = %q{税金計算ライブラリ}
   spec.description   = %q{税金計算ライブラリ}
   spec.homepage      = 'https://github.com/hybitz/tax_jp'
