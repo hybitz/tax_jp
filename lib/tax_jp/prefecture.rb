@@ -22,7 +22,7 @@ module TaxJp
     end
 
     def self.find_by_code(code)
-      @@prefectures[code.to_s]
+      @@prefectures["%02d" % code.to_i]
     end
 
   end
