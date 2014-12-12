@@ -5,7 +5,8 @@
   rows.each do |row|
     code = row[0]
     name = row[1]
-    assert_equal name, TaxJp.find_prefecture_by_code(code)
+    assert p = TaxJp::Prefecture.find_by_code(code)
+    assert_equal name, p.name
   end
 end
 
