@@ -2,8 +2,7 @@ language: ruby
 rvm:
   - 2.1.0
   - 2.0.0
-install:
-  gem uninstall bundler
+before_install:
   gem install bundler --version '1.7.9'
 script:
   - bundle exec rake close
