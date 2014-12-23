@@ -12,9 +12,9 @@ module TaxJp
         YAML.load_file(File.join(gem_dir, 'data', filename))
       end
 
-      def render(template)
-        src = File.join(gem_dir, 'templates', template)
-        dest = File.join(gem_dir, template[0..-5])
+      def render(filename)
+        src = File.join(gem_dir, 'templates', filename + '.erb')
+        dest = File.join(gem_dir, filename)
         FileUtils.mkdir_p(File.dirname(dest))
         File.write(dest, ERB.new(File.read(src), 0, '-').result)
       end

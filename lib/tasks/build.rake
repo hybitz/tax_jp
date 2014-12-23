@@ -1,8 +1,8 @@
 require 'rake'
+require 'tax_jp'
 
 namespace :taxjp do
   task :build do
-    js_dir = 'app/assets/javascripts'
-    TaxJp::Utils.render 'app/assets/javascripts/tax.js.erb'
+    TaxJp::Utils.render 'app/assets/javascripts/tax.js'
   end
 end
