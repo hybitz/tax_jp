@@ -2,16 +2,16 @@ if (typeof tax === "undefined") {
   var tax = {};
 }
 
-tax.NONTAXABLE = 1; // 非課税
-tax.INCLUSIVE = 2; // 内税
-tax.EXCLUSIVE = 3; // 外税
+tax.NONTAXABLE = <%= TaxJp::TAX_TYPE_NONTAXABLE %>; // 非課税
+tax.INCLUSIVE = <%= TaxJp::TAX_TYPE_INCLUSIVE %>; // 内税
+tax.EXCLUSIVE = <%= TaxJp::TAX_TYPE_EXCLUSIVE %>; // 外税
 
 tax.RATE_3 = Date.parse('1989-04-01');
 
 tax.consumptionTaxes = [
-    {date: Date.parse('2014-04-01'), rate: 0.08},
-    {date: Date.parse('1997-04-01'), rate: 0.05},
-    {date: Date.parse('1989-04-01'), rate: 0.03},
+  <%- TaxJp::Utils.load_yaml('consumption_taxes.yml')['consumption_taxes'].reverse_each do |start_date, rate| -%>
+    {date: Date.parse('<%= start_date.strftime('%Y-%m-%d') %>'), rate: <%= rate %>},
+  <%- end -%>
 ];
 
 tax.getRateOn = function(date, options) {

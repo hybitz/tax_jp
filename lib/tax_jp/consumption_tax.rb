@@ -1,10 +1,9 @@
 module TaxJp
   module ConsumptionTax
-  
     @@consumption_taxes = TaxJp::Utils.load_yaml('consumption_taxes.yml')['consumption_taxes']
 
     def rate_on(date, options = {})
-      if (date.is_a?(String))
+      if date.is_a?(String)
         date = Date.parse(date)
       end
 
