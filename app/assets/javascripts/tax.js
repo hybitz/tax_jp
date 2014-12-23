@@ -18,7 +18,7 @@ tax.getRateOn = function(date, options) {
   if (typeof date === 'string') {
     date = Date.parse(date);
   }
-  options ||= {};
+  options = options || {};
 
   var ret = 0;
   for (var i = 0; this.consumptionTaxes.length; i ++) {
@@ -28,9 +28,9 @@ tax.getRateOn = function(date, options) {
     }
   }
 
-  if (options.percent)
+  if (options.percent) {
     ret *= 100;
-  end
+  }
   
   return ret;
 };
