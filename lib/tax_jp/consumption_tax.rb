@@ -1,19 +1,17 @@
 module TaxJp
   module ConsumptionTax
   
-    def get_rate_on(date, options = {})
+    @@consumption_taxes = TaxJp::Utils.load_yaml('consumption_taxes.yml')['consumption_taxes']
+
+    def rate_on(date, options = {})
       if (date.is_a?(String))
         date = Date.parse(date)
       end
-  
-      if (date >= RATE_3 && date < RATE_5)
-        ret = 0.03;
-      elsif (date >= RATE_5 && date < RATE_8)
-        ret = 0.05;
-      elsif (date >= RATE_8)
-        ret = 0.08;
-      else
-        ret = 0
+
+      ret = 0
+      @@consumption_taxes.reverse_each do |start_date, rate|
+        ret = rate
+        break if date >= start_date
       end
   
       if options[:percent]

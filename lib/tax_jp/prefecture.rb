@@ -10,9 +10,7 @@ module TaxJp
     end
 
     @@prefectures = {}
-    gem_dir = File.dirname(File.dirname(File.dirname(__FILE__)))
-    prefectures = YAML.load_file(File.join(gem_dir, 'data', 'prefectures.yml'))['prefectures']
-    prefectures.each do |key, value|
+    TaxJp::Utils.load_yaml('prefectures.yml')['prefectures'].each do |key, value|
       code = "%02d" % key.to_i
       @@prefectures[code] = Prefecture.new(code, value)
     end

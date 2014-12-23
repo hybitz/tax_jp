@@ -6,6 +6,7 @@ if defined?(Rails)
   require 'tax_jp/rails/railtie'
 end
 
+require 'tax_jp/utils'
 require 'tax_jp/prefecture'
 
 module TaxJp
