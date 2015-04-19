@@ -6,8 +6,6 @@ tax.NONTAXABLE = 1; // 非課税
 tax.INCLUSIVE = 2; // 内税
 tax.EXCLUSIVE = 3; // 外税
 
-tax.RATE_3 = Date.parse('1989-04-01');
-
 tax.consumptionTaxes = [
     {date: Date.parse('2014-04-01'), rate: 0.08},
     {date: Date.parse('1997-04-01'), rate: 0.05},
