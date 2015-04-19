@@ -1,6 +1,6 @@
 module TaxJp
   module ConsumptionTax
-    @@consumption_taxes = TaxJp::Utils.load_yaml('consumption_taxes.yml')['consumption_taxes']
+    @@consumption_taxes = TaxJp::Utils.load_yaml('消費税.yml')
 
     def rate_on(date, options = {})
       if date.is_a?(String)

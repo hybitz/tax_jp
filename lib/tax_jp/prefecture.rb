@@ -10,7 +10,7 @@ module TaxJp
     end
 
     @@prefectures = {}
-    TaxJp::Utils.load_yaml('prefectures.yml')['prefectures'].each do |key, value|
+    TaxJp::Utils.load_yaml('都道府県.yml').each do |key, value|
       code = "%02d" % key.to_i
       @@prefectures[code] = Prefecture.new(code, value)
     end
