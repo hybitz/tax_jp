@@ -7,7 +7,7 @@ tax.INCLUSIVE = <%= TaxJp::TAX_TYPE_INCLUSIVE %>; // 内税
 tax.EXCLUSIVE = <%= TaxJp::TAX_TYPE_EXCLUSIVE %>; // 外税
 
 tax.consumptionTaxes = [
-  <%- TaxJp::Utils.load_yaml('consumption_taxes.yml')['consumption_taxes'].reverse_each do |start_date, rate| -%>
+  <%- TaxJp::Utils.load_yaml('消費税.yml').reverse_each do |start_date, rate| -%>
     {date: Date.parse('<%= start_date.strftime('%Y-%m-%d') %>'), rate: <%= rate %>},
   <%- end -%>
 ];

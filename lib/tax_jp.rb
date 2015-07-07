@@ -10,6 +10,11 @@ require 'tax_jp/utils'
 require 'tax_jp/prefecture'
 
 module TaxJp
+  # 消費税
   require 'tax_jp/consumption_tax'
   extend TaxJp::ConsumptionTax
+
+  # 源泉徴収税
+  require 'tax_jp/withheld_tax'
+  extend TaxJp::WithheldTax
 end
