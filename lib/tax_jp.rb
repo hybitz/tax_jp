@@ -16,5 +16,4 @@ module TaxJp
 
   # 源泉徴収税
   require 'tax_jp/withheld_tax'
-  extend TaxJp::WithheldTax
 end

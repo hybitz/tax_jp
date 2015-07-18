@@ -8,8 +8,16 @@ module TaxJp
         File.expand_path('../../..', __FILE__)
       end
 
+      def data_dir
+        File.join(gem_dir, 'data')
+      end
+
       def load_yaml(filename)
-        YAML.load_file(File.join(gem_dir, 'data', filename))
+        YAML.load_file(File.join(data_dir, filename))
+      end
+
+      def load_file(filename)
+        File.read(File.join(data_dir, filename))
       end
 
       def render(filename)
