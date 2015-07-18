@@ -35,9 +35,13 @@ module TaxJp
       begin
         sql = 'select * from withheld_taxes where valid_from <= ? and valid_until >= ? and salary_range_from <= ? and salary_range_to > ?'
 
-        ret = []
+        ret = nil
         db.execute(sql, [date, date, salary, salary]) do |row|
-          ret << TaxJp::WithheldTax.new(row)
+          if ret
+            raise "源泉徴収税が重複して登録されています。date=#{date}, salary=#{salary}"
+          else
+            ret = TaxJp::WithheldTax.new(row)
+          end
         end
         ret
       ensure
