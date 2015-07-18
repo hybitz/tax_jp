@@ -30,9 +30,7 @@ module TaxJp
 
     def self.find_by_date_and_salary(date, salary)
       date = date.strftime('%Y-%m-%d') if date.is_a?(Date)
-
-      db = SQLite3::Database.new(DB_PATH)
-      begin
+      with_database do |db|
         sql = 'select * from withheld_taxes where valid_from <= ? and valid_until >= ? and salary_range_from <= ? and salary_range_to > ?'
 
         ret = nil
@@ -44,6 +42,29 @@ module TaxJp
           end
         end
         ret
+      end
+    end
+
+    def self.find_by_date(date)
+      date = date.strftime('%Y-%m-%d') if date.is_a?(Date)
+      with_database do |db|
+        sql = 'select * from withheld_taxes where valid_from <= ? and valid_until >= ?'
+        
+        ret = []
+        db.execute(sql, [date, date]) do |row|
+          ret << TaxJp::WithheldTax.new(row)
+        end
+        
+        ret.sort{|a, b| a.salary_range_from <=> b.salary_range_from }
+      end
+    end
+
+    private
+
+    def self.with_database
+      db = SQLite3::Database.new(DB_PATH)
+      begin
+        yield db
       ensure
         db.close
       end
