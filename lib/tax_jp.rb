@@ -14,6 +14,9 @@ module TaxJp
   require 'tax_jp/consumption_tax'
   extend TaxJp::ConsumptionTax
 
+  # 社会保険料
+  require 'tax_jp/social_insurance'
+
   # 源泉徴収税
   require 'tax_jp/withheld_tax'
 end
