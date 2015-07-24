@@ -14,7 +14,19 @@ class TaxJp::SocialInsurances::DbBuilder
 
         CSV.foreach(filename, :col_sep => "\t") do |row|
           next if row[0].to_i == 0
-          db.execute(insert_sql, [valid_from, valid_until] + row.map{|col| normalize_amount(col)})
+          db.execute(insert_sql_grade, [valid_from, valid_until] + row.map{|col| normalize_amount(col)})
+        end
+      end
+
+      Dir.glob(File.join(TaxJp::Utils.data_dir, '社会保険料', '健康保険-*.tsv')).each do |filename|
+        valid_from, valid_until = filename_to_date(filename)
+
+        CSV.foreach(filename, :col_sep => "\t") do |row|
+          next unless row[1].to_f > 0
+          values = [valid_from, valid_until]
+          values << TaxJp::Prefecture.find_by_name(row.shift).code
+          values += row.map{|col| (col.to_f * 0.01).round(4) }
+          db.execute(insert_sql_health_insurance, values)
         end
       end
     end
@@ -26,7 +38,8 @@ class TaxJp::SocialInsurances::DbBuilder
     if options.fetch(:recreate, true)
       FileUtils.rm_f(@db_path)
       db = SQLite3::Database.new(@db_path)
-      db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema.sql')))
+      db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema_grades.sql')))
+      db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema_health_insurances.sql')))
     else
       db = SQLite3::Database.new(@db_path)
     end
@@ -38,7 +51,7 @@ class TaxJp::SocialInsurances::DbBuilder
     end
   end
 
-  def insert_sql
+  def insert_sql_grade
     columns = %w{valid_from valid_until grade pension_grade monthly_standard daily_standard salary_from salary_to}
 
     ret = 'insert into grades ( '
@@ -49,7 +62,18 @@ class TaxJp::SocialInsurances::DbBuilder
     ret
   end
 
-  def normalize_amount(amount)
+  def insert_sql_health_insurance
+    columns = %w{valid_from valid_until prefecture_code general particular basic}
+
+    ret = 'insert into health_insurances ( '
+    ret << columns.join(',')
+    ret << ') values ('
+    ret << columns.map{|c| '?' }.join(',')
+    ret << ')'
+    ret
+  end
+
+  def normalize_amount(amount, options = {})
     if amount.to_s == '-'
       ret = 2147483647
     else
