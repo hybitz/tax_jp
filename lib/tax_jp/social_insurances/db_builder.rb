@@ -29,6 +29,18 @@ class TaxJp::SocialInsurances::DbBuilder
           db.execute(insert_sql_health_insurance, values)
         end
       end
+
+      Dir.glob(File.join(TaxJp::Utils.data_dir, '社会保険料', '厚生年金.tsv')).each do |filename|
+        CSV.foreach(filename, :col_sep => "\t") do |row|
+          next unless row[2].to_f > 0
+          values = []
+          values << row.shift
+          values << row.shift
+          values += row.map{|col| (col.to_f * 0.01).round(5) }
+          db.execute(insert_sql_welfare_pensions, values)
+        end
+      end
+
     end
   end
 
@@ -40,6 +52,7 @@ class TaxJp::SocialInsurances::DbBuilder
       db = SQLite3::Database.new(@db_path)
       db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema_grades.sql')))
       db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema_health_insurances.sql')))
+      db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema_welfare_pensions.sql')))
     else
       db = SQLite3::Database.new(@db_path)
     end
@@ -66,6 +79,17 @@ class TaxJp::SocialInsurances::DbBuilder
     columns = %w{valid_from valid_until prefecture_code general particular basic}
 
     ret = 'insert into health_insurances ( '
+    ret << columns.join(',')
+    ret << ') values ('
+    ret << columns.map{|c| '?' }.join(',')
+    ret << ')'
+    ret
+  end
+
+  def insert_sql_welfare_pensions
+    columns = %w{valid_from valid_until general particular child_support}
+
+    ret = 'insert into welfare_pensions ( '
     ret << columns.join(',')
     ret << ') values ('
     ret << columns.map{|c| '?' }.join(',')

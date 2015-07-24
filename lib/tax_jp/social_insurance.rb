@@ -1,9 +1,11 @@
 require 'sqlite3'
+require_relative 'welfare_pension'
 
 module TaxJp
   module SocialInsurances
   end
 
+  # 社会保険
   class SocialInsurance
     DB_PATH = File.join(TaxJp::Utils.data_dir, '社会保険料.db')
 
@@ -13,10 +15,13 @@ module TaxJp
     attr_reader :monthly_standard, :daily_standard
     attr_reader :salary_from, :salary_to
 
-    # 健康保険（Social Insurance）
+    # 健康保険
     attr_reader :si_valid_from, :si_valid_until
     attr_reader :prefecture
     attr_reader :general, :particular, :basic
+
+    # 厚生年金
+    attr_reader :welfare_pension
 
     def initialize(row)
       @valid_from = row[0]
@@ -33,6 +38,11 @@ module TaxJp
       @general = row[11]
       @particular = row[12]
       @basic = row[13]
+      @welfare_pension = TaxJp::WelfarePension.new(
+        :valid_from => row[14], :valid_until => row[15],
+        :monthly_standard => row[4],
+        :general => row[16], :particular => row[17],
+        :child_support => row[18])
     end
 
     def general_amount
@@ -54,7 +64,7 @@ module TaxJp
     private
 
     def floor_amount(amount)
-      (amount + 10).floor * 0.1
+      (amount * 10).floor * 0.1
     end
 
     def self.find_grade_by_date_and_salary(date, salary)
@@ -116,16 +126,17 @@ module TaxJp
       elsif grade.is_a?(Fixnum)
         grade = grade.to_i
       else
-        raise TypeError.new(grade.class)
+        raise TypeError.new("#{grade.class} は等級として不正です。")
       end
 
       with_database do |db|
-        sql =  'select g.*, hi.* from health_insurances hi '
-        sql << 'inner join grades g on (g.valid_from <= ? and g.valid_until >= ? and g.grade = ?) '
-        sql << 'where hi.valid_from <= ? and hi.valid_until >= ? and hi.prefecture_code = ? '
+        sql =  'select g.*, hi.*, wp.* from grades g '
+        sql << 'inner join health_insurances hi on (hi.valid_from <= ? and hi.valid_until >= ? and hi.prefecture_code = ?) '
+        sql << 'inner join welfare_pensions wp on (wp.valid_from <= ? and wp.valid_until >= ?) '
+        sql << 'where g.valid_from <= ? and g.valid_until >= ? and g.grade = ? '
 
         ret = nil
-        db.execute(sql, [date, date, grade, date, date, prefecture_code]) do |row|
+        db.execute(sql, [date, date, prefecture_code, date, date, date, date, grade]) do |row|
           if ret
             raise "健康保険が重複して登録されています。date=#{date}, prefecture_code=#{prefecture_code}, grade=#{grade}"
           else
@@ -135,8 +146,6 @@ module TaxJp
         ret
       end
     end
-
-    private
 
     def self.with_database
       db = SQLite3::Database.new(DB_PATH)
