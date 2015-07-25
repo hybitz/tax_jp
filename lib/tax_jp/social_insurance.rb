@@ -42,19 +42,19 @@ module TaxJp
         :child_support => row[19])
     end
 
-    def self.find_by_date_and_salary(date, salary)
-      date = date.strftime('%Y-%m-%d') if date.is_a?(Date)
+    def self.find_all_by_date_and_prefecture(date, prefecture)
+      date = convert_to_date(date)
+      prefecture_code = convert_to_prefecture_code(prefecture)
 
       with_database do |db|
-        sql = 'select * from grades where valid_from <= ? and valid_until >= ? and salary_from <= ? and salary_to > ?'
+        sql =  'select g.*, hi.*, wp.* from grades g '
+        sql << 'inner join health_insurances hi on (hi.valid_from <= ? and hi.valid_until >= ? and (hi.prefecture_code = ? or hi.prefecture_code is null)) '
+        sql << 'inner join welfare_pensions wp on (wp.valid_from <= ? and wp.valid_until >= ?) '
+        sql << 'where g.valid_from <= ? and g.valid_until >= ? '
 
-        ret = nil
-        db.execute(sql, [date, date, salary, salary]) do |row|
-          if ret
-            raise "等級が重複して登録されています。date=#{date}, salary=#{salary}"
-          else
-            ret = TaxJp::SocialInsurance.new(row)
-          end
+        ret = []
+        db.execute(sql, [date, date, prefecture_code, date, date, date, date]) do |row|
+          ret << TaxJp::SocialInsurance.new(row)
         end
         ret
       end
@@ -67,17 +67,13 @@ module TaxJp
 
       with_database do |db|
         sql =  'select g.*, hi.*, wp.* from grades g '
-        sql << 'inner join health_insurances hi on (hi.valid_from <= ? and hi.valid_until >= ? and hi.prefecture_code = ?) '
+        sql << 'inner join health_insurances hi on (hi.valid_from <= ? and hi.valid_until >= ? and (hi.prefecture_code = ? or hi.prefecture_code is null)) '
         sql << 'inner join welfare_pensions wp on (wp.valid_from <= ? and wp.valid_until >= ?) '
         sql << 'where g.valid_from <= ? and g.valid_until >= ? and g.salary_from <= ? and g.salary_to > ? '
 
         ret = nil
         db.execute(sql, [date, date, prefecture_code, date, date, date, date, salary, salary]) do |row|
-          if ret
-            raise "社会保険が重複して登録されています。date=#{date}, prefecture_code=#{prefecture_code}, salary=#{salary}"
-          else
-            ret = TaxJp::SocialInsurance.new(row)
-          end
+          ret = TaxJp::SocialInsurance.new(row)
         end
         ret
       end

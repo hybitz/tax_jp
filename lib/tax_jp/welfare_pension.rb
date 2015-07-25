@@ -24,10 +24,18 @@ module TaxJp
       floor_amount(monthly_standard * general / 2) 
     end
 
+    def particular_amount
+      floor_amount(monthly_standard * particular) 
+    end
+
+    def particular_amount_half
+      floor_amount(monthly_standard * particular / 2) 
+    end
+
     private
 
     def floor_amount(amount)
-      (amount * 10).floor * 0.1
+      (amount * 100).floor * 0.01
     end
 
   end

@@ -22,7 +22,7 @@ module TaxJp::SocialInsurances::Utils
     elsif value.to_s =~ /[0-9]{2}/
       ret = value.to_s
     else
-      p = Prefecture.find_by_name(value.to_s)
+      p = TaxJp::Prefecture.find_by_name(value.to_s)
       if p
         ret = p.code
       else
