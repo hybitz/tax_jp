@@ -1,4 +1,5 @@
 require 'sqlite3'
+require_relative 'grade'
 require_relative 'health_insurance'
 require_relative 'welfare_pension'
 
@@ -11,25 +12,18 @@ module TaxJp
     DB_PATH = File.join(TaxJp::Utils.data_dir, '社会保険料.db')
 
     # 等級
-    attr_reader :valid_from, :valid_until
-    attr_reader :grade, :pension_grade
-    attr_reader :monthly_standard, :daily_standard
-    attr_reader :salary_from, :salary_to
-
+    attr_reader :grade
     # 健康保険
     attr_reader :health_insurance
     # 厚生年金
     attr_reader :welfare_pension
 
     def initialize(row)
-      @valid_from = row[0]
-      @valid_until = row[1]
-      @grade = row[2]
-      @pension_grade = row[3]
-      @monthly_standard = row[4]
-      @daily_standard = row[5]
-      @salary_from = row[6]
-      @salary_to = row[7]
+      @grade = TaxJp::Grade.new(
+        :valid_from => row[0], :valid_until => row[1],
+        :grade => row[2], :pension_grade => row[3],
+        :monthly_standard => row[4], :daily_standard => row[5],
+        :salary_from => row[6], :salary_to => row[7])
 
       @health_insurance = TaxJp::HealthInsurance.new(
         :valid_from => row[8], :valid_until => row[9],
@@ -45,7 +39,7 @@ module TaxJp
         :child_support => row[18])
     end
 
-    def self.find_grade_by_date_and_salary(date, salary)
+    def self.find_by_date_and_salary(date, salary)
       date = date.strftime('%Y-%m-%d') if date.is_a?(Date)
 
       with_database do |db|
@@ -60,21 +54,6 @@ module TaxJp
           end
         end
         ret
-      end
-    end
-
-    def self.find_grades_by_date(date)
-      date = date.strftime('%Y-%m-%d') if date.is_a?(Date)
-
-      with_database do |db|
-        sql = 'select * from grades where valid_from <= ? and valid_until >= ?'
-        
-        ret = []
-        db.execute(sql, [date, date]) do |row|
-          ret << TaxJp::SocialInsurance.new(row)
-        end
-        
-        ret.sort{|a, b| a.grade <=> b.grade }
       end
     end
 
