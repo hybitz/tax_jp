@@ -5,7 +5,8 @@ module TaxJp
     attr_reader :valid_from, :valid_until
     attr_reader :monthly_standard
     attr_reader :prefecture
-    attr_reader :general, :particular, :basic
+    attr_reader :general, :care
+    attr_reader :particular, :basic
 
     def initialize(attrs = {})
       @valid_from = attrs[:valid_from]
@@ -13,6 +14,7 @@ module TaxJp
       @monthly_standard = attrs[:monthly_standard]
       @prefecture = attrs[:prefecture]
       @general= attrs[:general]
+      @care = attrs[:care]
       @particular= attrs[:particular]
       @basic = attrs[:basic]
     end
@@ -26,11 +28,11 @@ module TaxJp
     end
 
     def general_amount_care
-      floor_amount(monthly_standard * (general + 0.0158)) 
+      floor_amount(monthly_standard * (general + care)) 
     end
 
     def general_amount_care_half
-      floor_amount(monthly_standard * (general + 0.0158) / 2) 
+      floor_amount(monthly_standard * (general + care) / 2) 
     end
 
     private

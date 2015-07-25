@@ -32,14 +32,14 @@ module TaxJp
         :valid_from => row[8], :valid_until => row[9],
         :monthly_standard => row[4],
         :prefecture => Prefecture.find_by_code(row[10]),
-        :general => row[11], :particular => row[12],
-        :basic => row[13])
+        :general => row[11], :care => row[12],
+        :particular => row[13], :basic => row[14])
 
       @welfare_pension = TaxJp::WelfarePension.new(
-        :valid_from => row[14], :valid_until => row[15],
+        :valid_from => row[15], :valid_until => row[16],
         :monthly_standard => row[4],
-        :general => row[16], :particular => row[17],
-        :child_support => row[18])
+        :general => row[17], :particular => row[18],
+        :child_support => row[19])
     end
 
     def self.find_by_date_and_salary(date, salary)

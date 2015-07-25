@@ -18,14 +18,34 @@ class TaxJp::SocialInsurances::DbBuilder
         end
       end
 
+      Dir.glob(File.join(TaxJp::Utils.data_dir, '社会保険料', '旧健康保険.tsv')).each do |filename|
+        CSV.foreach(filename, :col_sep => "\t") do |row|
+          next unless row[2].to_f > 0
+          values = []
+          values << row[0]
+          values << row[1]
+          values << nil
+          values << (row[2].to_f * 0.01).round(4)
+          values << (row[3].to_f * 0.01).round(4)
+          values << 0
+          values << 0
+          db.execute(insert_sql_health_insurance, values)
+        end
+      end
+
       Dir.glob(File.join(TaxJp::Utils.data_dir, '社会保険料', '健康保険-*.tsv')).each do |filename|
         valid_from, valid_until = filename_to_date(filename)
 
         CSV.foreach(filename, :col_sep => "\t") do |row|
           next unless row[1].to_f > 0
-          values = [valid_from, valid_until]
-          values << TaxJp::Prefecture.find_by_name(row.shift).code
-          values += row.map{|col| (col.to_f * 0.01).round(4) }
+          values = []
+          values << valid_from
+          values << valid_until
+          values << TaxJp::Prefecture.find_by_name(row[0]).code
+          values << (row[1].to_f * 0.01).round(4)
+          values << (row[2].to_f * 0.01).round(4)
+          values << (row[3].to_f * 0.01).round(4)
+          values << (row[3].to_f * 0.01).round(4)
           db.execute(insert_sql_health_insurance, values)
         end
       end
@@ -76,7 +96,7 @@ class TaxJp::SocialInsurances::DbBuilder
   end
 
   def insert_sql_health_insurance
-    columns = %w{valid_from valid_until prefecture_code general particular basic}
+    columns = %w{valid_from valid_until prefecture_code general care particular basic}
 
     ret = 'insert into health_insurances ( '
     ret << columns.join(',')
