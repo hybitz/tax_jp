@@ -1,19 +1,20 @@
 module TaxJp
 
-  # 厚生年金
-  class WelfarePension
+  # 健康年金
+  class HealthInsurance
     attr_reader :valid_from, :valid_until
     attr_reader :monthly_standard
-    attr_reader :general, :particular
-    attr_reader :child_support
+    attr_reader :prefecture
+    attr_reader :general, :particular, :basic
 
     def initialize(attrs = {})
       @valid_from = attrs[:valid_from]
       @valid_until = attrs[:valid_until]
       @monthly_standard = attrs[:monthly_standard]
+      @prefecture = attrs[:prefecture]
       @general= attrs[:general]
       @particular= attrs[:particular]
-      @child_support = attrs[:child_support]
+      @basic = attrs[:basic]
     end
 
     def general_amount
@@ -22,6 +23,14 @@ module TaxJp
 
     def general_amount_half
       floor_amount(monthly_standard * general / 2) 
+    end
+
+    def general_amount_care
+      floor_amount(monthly_standard * (general + 0.0158)) 
+    end
+
+    def general_amount_care_half
+      floor_amount(monthly_standard * (general + 0.0158) / 2) 
     end
 
     private
