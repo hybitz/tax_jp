@@ -33,7 +33,8 @@ class TaxJp::SocialInsurances::WelfarePension
   private
 
   def monthly_standard
-    grade.pension_grade > 0 ? grade.monthly_standard : 0
+    return 0 unless grade.pension_grade >= 1 and grade.pension_grade <= 30
+    grade.monthly_standard
   end
 
   def floor_amount(amount)
