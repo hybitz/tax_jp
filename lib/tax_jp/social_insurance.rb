@@ -42,6 +42,28 @@ module TaxJp
         :child_support => row[19])
     end
 
+    def valid_from
+      ret = grade.valid_from
+      if health_insurance and health_insurance.valid_from > ret
+        ret = health_insurance.valid_from
+      end
+      if welfare_pension and welfare_pension.valid_from > ret
+        ret = welfare_pension.valid_from
+      end
+      ret
+    end
+
+    def valid_until
+      ret = grade.valid_until
+      if health_insurance and health_insurance.valid_until < ret
+        ret = health_insurance.valid_until
+      end
+      if welfare_pension and welfare_pension.valid_until < ret
+        ret = welfare_pension.valid_until
+      end
+      ret
+    end
+
     def self.find_all_by_date_and_prefecture(date, prefecture)
       date = convert_to_date(date)
       prefecture_code = convert_to_prefecture_code(prefecture)
