@@ -13,7 +13,7 @@ class TaxJp::WithheldTaxes::DbBuilder
         valid_from, valid_until = filename_to_date(filename)
   
         CSV.foreach(filename, :col_sep => "\t") do |row|
-          next if row[0].nil?
+          next if row[0].to_i == 0
           db.execute(insert_sql, [valid_from.to_s, valid_until.to_s] + row.map{|col| normalize_amount(col)})
         end
       end
