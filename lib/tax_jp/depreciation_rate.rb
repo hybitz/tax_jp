@@ -27,10 +27,27 @@ module TaxJp
       with_database do |db|
         sql =  'select * from depreciation_rates '
         sql << 'where valid_from <= ? and valid_until >= ? '
+        sql << 'order by durable_years '
 
         ret = []
         db.execute(sql, [date, date]) do |row|
           ret << TaxJp::DepreciationRate.new(row)
+        end
+        ret
+      end
+    end
+
+    def self.find_by_date_and_durable_years(date, durable_years)
+      date = TaxJp::Utils.convert_to_date(date)
+
+      with_database do |db|
+        sql =  'select * from depreciation_rates '
+        sql << 'where valid_from <= ? and valid_until >= ? '
+        sql << '  and durable_years = ? '
+
+        ret = nil
+        db.execute(sql, [date, date, durable_years]) do |row|
+          ret = TaxJp::DepreciationRate.new(row)
         end
         ret
       end
