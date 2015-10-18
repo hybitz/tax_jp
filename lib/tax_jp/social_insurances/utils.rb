@@ -1,19 +1,5 @@
 module TaxJp::SocialInsurances::Utils
 
-  def convert_to_date(value)
-    ret = nil
-
-    if value.is_a?(Date)
-      ret = value.strftime('%Y-%m-%d')
-    elsif value.is_a?(String)
-      ret = value
-    else
-      raise TypeError.new(value.class)
-    end
-
-    ret
-  end
-
   def convert_to_prefecture_code(value)
     ret = nil
 

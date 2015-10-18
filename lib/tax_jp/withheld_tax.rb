@@ -1,5 +1,3 @@
-require 'sqlite3'
-
 module TaxJp
   module WithheldTaxes
   end

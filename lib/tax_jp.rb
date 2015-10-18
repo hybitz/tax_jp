@@ -1,3 +1,4 @@
+require 'sqlite3'
 require 'tax_jp/version'
 require 'tax_jp/const'
 
@@ -13,6 +14,9 @@ module TaxJp
   # 消費税
   require 'tax_jp/consumption_tax'
   extend TaxJp::ConsumptionTax
+
+  # 減価償却率
+  require 'tax_jp/depreciation_rate'
 
   # 社会保険料
   require 'tax_jp/social_insurance'

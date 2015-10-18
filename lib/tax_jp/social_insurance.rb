@@ -1,5 +1,3 @@
-require 'sqlite3'
-
 module TaxJp
   module SocialInsurances
     require_relative 'social_insurances/utils'
@@ -65,7 +63,7 @@ module TaxJp
     end
 
     def self.find_all_by_date_and_prefecture(date, prefecture)
-      date = convert_to_date(date)
+      date = TaxJp::Utils.convert_to_date(date)
       prefecture_code = convert_to_prefecture_code(prefecture)
 
       with_database do |db|
@@ -83,7 +81,7 @@ module TaxJp
     end
 
     def self.find_by_date_and_prefecture_and_salary(date, prefecture, salary)
-      date = convert_to_date(date)
+      date = TaxJp::Utils.convert_to_date(date)
       prefecture_code = convert_to_prefecture_code(prefecture)
       salary = salary.to_i
 
