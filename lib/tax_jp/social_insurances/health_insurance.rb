@@ -1,4 +1,4 @@
-# 健康年金
+# 健康保健
 class TaxJp::SocialInsurances::HealthInsurance
   attr_reader :grade
   attr_reader :valid_from, :valid_until
