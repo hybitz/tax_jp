@@ -8,7 +8,7 @@ class TaxJp::DepreciationRates::DbBuilder
 
   def run(options = {})
     with_database(options) do |db|
-      Dir.glob(File.join(TaxJp::Utils.data_dir, '減価償却', '減価償却率-*.tsv')).each do |filename|
+      Dir.glob(File.join(TaxJp::Utils.data_dir, '減価償却率', '減価償却率-*.tsv')).each do |filename|
         valid_from, valid_until = filename_to_date(filename)
 
         CSV.foreach(filename, :col_sep => "\t") do |row|
@@ -25,7 +25,7 @@ class TaxJp::DepreciationRates::DbBuilder
     if options.fetch(:recreate, true)
       FileUtils.rm_f(@db_path)
       db = SQLite3::Database.new(@db_path)
-      db.execute(TaxJp::Utils.load_file(File.join('減価償却', 'schema_depreciation_rates.sql')))
+      db.execute(TaxJp::Utils.load_file(File.join('減価償却率', 'schema_depreciation_rates.sql')))
     else
       db = SQLite3::Database.new(@db_path)
     end
