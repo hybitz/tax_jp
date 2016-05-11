@@ -18,16 +18,15 @@ class TaxJp::Addresses::DbBuilder
 
         zip_code = line[2]
         prefecture_name = line[6]
+        city = line[7]
+        section = line[8] == '以下に掲載がない場合' ? '' : line[8]
 
-        kanji = line[6..7].join
-        if line[8] != '以下に掲載がない場合'
-          normalized = line[8].gsub(/（.*/, '')
-          next if normalized.end_with?('地割）') or normalized.end_with?('地割')
-
-          kanji << normalized
+        section = section.gsub(/（.*/, '')
+        if section.end_with?('地割）') or section.end_with?('地割')
+          next
         end
 
-        row = [zip_code, prefecture_code, prefecture_name]
+        row = [zip_code, prefecture_code, prefecture_name, city, section]
         db.execute(insert_sql, row)
       end
       puts
@@ -53,7 +52,7 @@ class TaxJp::Addresses::DbBuilder
   end
 
   def insert_sql
-    columns = %w{zip_code prefecture_code prefecture_name}
+    columns = %w{zip_code prefecture_code prefecture_name city section}
 
     ret = 'insert into addresses ( '
     ret << columns.join(',')
