@@ -1,5 +1,6 @@
 require 'rake'
 require 'tax_jp'
+require 'tax_jp/addresses/db_builder'
 require 'tax_jp/depreciation_rates/db_builder'
 require 'tax_jp/social_insurances/db_builder'
 require 'tax_jp/withheld_taxes/db_builder'
@@ -13,6 +14,13 @@ namespace :taxjp do
   end
 
   namespace :build do
+
+    desc '住所DBを構築します。'
+    task :address do
+      puts '住所'
+      fail unless system("bash -ex #{File.dirname(__FILE__)}/download_address.sh")
+      TaxJp::Addresses::DbBuilder.new.run
+    end
 
     desc '消費税DBを構築します。'
     task :consumption_tax do

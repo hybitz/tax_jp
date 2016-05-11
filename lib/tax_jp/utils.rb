@@ -27,6 +27,15 @@ module TaxJp
         File.write(dest, ERB.new(File.read(src), 0, '-').result)
       end
 
+      def with_database(db_path)
+        db = SQLite3::Database.new(db_path)
+        begin
+          yield db
+        ensure
+          db.close
+        end
+      end
+
       def convert_to_date(value)
         ret = nil
     
@@ -37,7 +46,19 @@ module TaxJp
         else
           raise TypeError.new(value.class)
         end
+
+        ret
+      end
+
+      def convert_to_zip_code(value)
+        ret = nil
     
+        if value.is_a?(String)
+          ret = value.sub('-', '')
+        else
+          raise TypeError.new(value.class)
+        end
+
         ret
       end
 

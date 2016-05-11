@@ -11,6 +11,9 @@ require 'tax_jp/utils'
 require 'tax_jp/prefecture'
 
 module TaxJp
+  # 住所
+  require 'tax_jp/address'
+
   # 消費税
   require 'tax_jp/consumption_tax'
   extend TaxJp::ConsumptionTax
