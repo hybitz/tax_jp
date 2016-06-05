@@ -67,13 +67,13 @@ module TaxJp
       prefecture_code = convert_to_prefecture_code(prefecture)
 
       with_database do |db|
-        sql =  'select g.*, hi.*, wp.* from grades g '
-        sql << 'inner join health_insurances hi on (hi.valid_from <= ? and hi.valid_until >= ? and (hi.prefecture_code = ? or hi.prefecture_code is null)) '
-        sql << 'inner join welfare_pensions wp on (wp.valid_from <= ? and wp.valid_until >= ?) '
+        sql, params = base_query(date, prefecture_code)
+
         sql << 'where g.valid_from <= ? and g.valid_until >= ? '
+        params += [date, date]
 
         ret = []
-        db.execute(sql, [date, date, prefecture_code, date, date, date, date]) do |row|
+        db.execute(sql, params) do |row|
           ret << TaxJp::SocialInsurance.new(row)
         end
         ret
@@ -85,19 +85,50 @@ module TaxJp
       prefecture_code = convert_to_prefecture_code(prefecture)
       salary = salary.to_i
 
+      ret = nil
+
       with_database do |db|
-        sql =  'select g.*, hi.*, wp.* from grades g '
-        sql << 'inner join health_insurances hi on (hi.valid_from <= ? and hi.valid_until >= ? and (hi.prefecture_code = ? or hi.prefecture_code is null)) '
-        sql << 'inner join welfare_pensions wp on (wp.valid_from <= ? and wp.valid_until >= ?) '
+        sql, params = base_query(date, prefecture_code)
+
         sql << 'where g.valid_from <= ? and g.valid_until >= ? and g.salary_from <= ? and g.salary_to > ? '
+        params += [date, date, salary, salary]
 
         ret = nil
-        db.execute(sql, [date, date, prefecture_code, date, date, date, date, salary, salary]) do |row|
+        db.execute(sql, params) do |row|
           ret = TaxJp::SocialInsurance.new(row)
         end
         ret
       end
     end
+
+    def self.find_by_date_and_prefecture_and_pension_grade(date, prefecture, pension_grade)
+      date = TaxJp::Utils.convert_to_date(date)
+      prefecture_code = convert_to_prefecture_code(prefecture)
+
+      with_database do |db|
+        sql, params = base_query(date, prefecture_code)
+
+        sql << 'where g.valid_from <= ? and g.valid_until >= ? and g.pension_grade = ? '
+        params += [date, date, pension_grade]
+
+        ret = nil
+        db.execute(sql, params) do |row|
+          ret = TaxJp::SocialInsurance.new(row)
+        end
+        ret
+      end
+    end
+
+    def self.base_query(date, prefecture_code)
+      sql =  'select g.*, hi.*, wp.* from grades g '
+      sql << 'inner join health_insurances hi on (hi.valid_from <= ? and hi.valid_until >= ? and (hi.prefecture_code = ? or hi.prefecture_code is null)) '
+      sql << 'inner join welfare_pensions wp on (wp.valid_from <= ? and wp.valid_until >= ?) '
+
+      params = [date, date, prefecture_code, date, date]
+
+      return sql, params
+    end
+    private_class_method :base_query
 
     def self.with_database
       db = SQLite3::Database.new(DB_PATH)
@@ -107,6 +138,8 @@ module TaxJp
         db.close
       end
     end
+    private_class_method :with_database
+
   end
 
 end
