@@ -34,13 +34,13 @@ class TaxJp::SocialInsurances::WelfarePension
 
   def monthly_standard
     return 0 if grade.pension_grade == 0
-    return 620000 if grade.pension_grade > 30
+    return 0 if grade.pension_grade > 30
     grade.monthly_standard
   end
 
   def daily_standard
     return 0 if grade.pension_grade == 0
-    return 20670 if grade.pension_grade > 30
+    return 0 if grade.pension_grade > 30
     grade.daily_standard
   end
 
