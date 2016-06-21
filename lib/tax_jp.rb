@@ -11,6 +11,9 @@ require 'tax_jp/utils'
 require 'tax_jp/prefecture'
 
 module TaxJp
+  # 元号
+  require 'tax_jp/gengou'
+
   # 住所
   require 'tax_jp/address'
 
