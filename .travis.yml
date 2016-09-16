@@ -1,10 +1,11 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.2.3
+  - 2.3.1
+  - 2.2.5
   - 2.1.6
   - 2.0.0
 before_install:
-  gem install bundler --version '1.7.9'
+  gem install bundler
 script:
   - bundle exec rake close
