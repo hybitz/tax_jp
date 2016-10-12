@@ -7,11 +7,12 @@ require 'tax_jp/withheld_taxes/db_builder'
 
 namespace :taxjp do
   task :build do
-    Rake::Task["taxjp:build:address"].invoke
     Rake::Task["taxjp:build:consumption_tax"].invoke
     Rake::Task["taxjp:build:depreciation_rate"].invoke
     Rake::Task["taxjp:build:social_insurance"].invoke
     Rake::Task["taxjp:build:withheld_tax"].invoke
+
+    Rake::Task["taxjp:build:address"].invoke
   end
 
   namespace :build do
