@@ -9,7 +9,7 @@ module TaxJp
 
       ret = 0
       @@consumption_taxes.reverse_each do |start_date, rate|
-        ret = rate
+        ret = rate['total']
         break if date >= start_date
       end
   
