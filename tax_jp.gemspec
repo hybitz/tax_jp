@@ -17,12 +17,12 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
-  s.required_ruby_version = '~> 2.0'
+  s.required_ruby_version = '~> 2.1'
 
   s.add_runtime_dependency 'sqlite3', '~> 1.3'
 
   s.add_development_dependency 'bundler', '~> 1.12'
   s.add_development_dependency 'closer', '~> 0.3'
-  s.add_development_dependency 'rake', '~> 10.0'
+  s.add_development_dependency 'rake', '~> 11.0'
   s.add_development_dependency 'rails', '>= 3.2.0', '< 5.0.0'
 end
