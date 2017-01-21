@@ -43,7 +43,7 @@ module TaxJp
       end
     end
 
-    def self.find_by_date(date)
+    def self.find_all_by_date(date)
       date = date.strftime('%Y-%m-%d') if date.is_a?(Date)
       with_database do |db|
         sql = 'select * from withheld_taxes where valid_from <= ? and valid_until >= ?'
