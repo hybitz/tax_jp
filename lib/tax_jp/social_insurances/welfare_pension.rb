@@ -15,19 +15,19 @@ class TaxJp::SocialInsurances::WelfarePension
   end
 
   def general_amount
-    floor_amount(monthly_standard * general) 
+    (monthly_standard * general).round(2) 
   end
 
   def general_amount_half
-    floor_amount(monthly_standard * general / 2)
+    floor_amount(general_amount / 2)
   end
 
   def particular_amount
-    floor_amount(monthly_standard * particular) 
+    (monthly_standard * particular).round(2) 
   end
 
   def particular_amount_half
-    floor_amount(monthly_standard * particular / 2) 
+    floor_amount(particular_amount / 2) 
   end
 
   private

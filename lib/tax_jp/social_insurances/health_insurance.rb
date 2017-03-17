@@ -18,19 +18,19 @@ class TaxJp::SocialInsurances::HealthInsurance
   end
 
   def general_amount
-    floor_amount(monthly_standard * general) 
+    (monthly_standard * general).round(1)
   end
 
   def general_amount_half
-    floor_amount(monthly_standard * general / 2) 
+    floor_amount(general_amount / 2)
   end
 
   def general_amount_care
-    floor_amount(monthly_standard * (general + care)) 
+    (monthly_standard * (general + care)).round(1) 
   end
 
   def general_amount_care_half
-    floor_amount(monthly_standard * (general + care) / 2) 
+    floor_amount(general_amount_care / 2) 
   end
 
   private
