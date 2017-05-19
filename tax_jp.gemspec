@@ -25,5 +25,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'closer', '~> 0.3'
   s.add_development_dependency 'minitest', '~> 5.10'
   s.add_development_dependency 'rake', '~> 12.0'
-  s.add_development_dependency 'rails', '>= 4.0', '< 5.0.0'
+  s.add_development_dependency 'rails', '>= 4.0', '< 5.1.0'
 end
