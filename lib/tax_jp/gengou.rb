@@ -19,7 +19,7 @@ module TaxJp
       return (start_year + year_jp.to_i - 1).to_s
     end
   
-    def self.to_wareki(year)
+  def self.to_wareki(year, only_year: false)
       return nil unless year.present?
   
       target_year = nil
@@ -32,8 +32,13 @@ module TaxJp
   
       gengou  = @@_gengou[target_year]
       year_jp  = year - target_year + 1
-  
-      return gengou + (year_jp == 1 ? '元' : year_jp.to_s)
+ 
+      if only_year
+        return year_jp.to_s
+      else
+        return gengou + (year_jp == 1 ? '元' : year_jp.to_s)
+      end
+      
     end
 
   end
