@@ -62,6 +62,13 @@ module TaxJp
         ret
       end
 
+      def filename_to_date(filename)
+        title, valid_from, valid_until = File.basename(filename).split('.').first.split('-')
+        valid_from = Date.strptime(valid_from, '%Y%m%d')
+        valid_until = Date.strptime(valid_until, '%Y%m%d')
+        [valid_from.strftime('%Y-%m-%d'), valid_until.strftime('%Y-%m-%d')]
+      end
+
     end
   end
 end

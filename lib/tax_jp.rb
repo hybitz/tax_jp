@@ -21,6 +21,9 @@ module TaxJp
   require 'tax_jp/consumption_tax'
   extend TaxJp::ConsumptionTax
 
+  # 法人税-区分番号
+  require 'tax_jp/corporate_tax'
+
   # 減価償却率
   require 'tax_jp/depreciation_rate'
 

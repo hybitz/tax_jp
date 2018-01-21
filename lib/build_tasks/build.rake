@@ -1,20 +1,12 @@
 require 'rake'
 require 'tax_jp'
 require 'tax_jp/addresses/db_builder'
+require 'tax_jp/corporate_taxes/db_builder'
 require 'tax_jp/depreciation_rates/db_builder'
 require 'tax_jp/social_insurances/db_builder'
 require 'tax_jp/withheld_taxes/db_builder'
 
 namespace :taxjp do
-  task :build do
-    Rake::Task["taxjp:build:consumption_tax"].invoke
-    Rake::Task["taxjp:build:depreciation_rate"].invoke
-    Rake::Task["taxjp:build:social_insurance"].invoke
-    Rake::Task["taxjp:build:withheld_tax"].invoke
-
-    Rake::Task["taxjp:build:address"].invoke
-  end
-
   namespace :build do
 
     desc '住所DBを構築します。'
@@ -48,5 +40,10 @@ namespace :taxjp do
       TaxJp::WithheldTaxes::DbBuilder.new.run
     end
 
+    desc '法人税-区分番号DBを構築します。'
+    task :corporate_tax do
+      puts '法人税-区分番号'
+      TaxJp::CorporateTaxes::DbBuilder.new.run
+    end
   end
 end
