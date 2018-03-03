@@ -28,10 +28,16 @@ namespace :taxjp do
       TaxJp::DepreciationRates::DbBuilder.new.run
     end
 
-    desc '社会保険料DBを構築します。'
+    desc '社会保険DBを構築します。'
     task :social_insurance do
       puts '社会保険料'
       TaxJp::SocialInsurances::DbBuilder.new.run
+    end
+
+    desc '労働保険DBを構築します。'
+    task :labor_insurance do
+      puts '雇用保険料'
+      TaxJp::LaborInsurances::EmploymentInsuranceDbBuilder.new.run
     end
 
     desc '源泉徴収税DBを構築します。'

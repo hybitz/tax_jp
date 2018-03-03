@@ -27,8 +27,11 @@ module TaxJp
   # 減価償却率
   require 'tax_jp/depreciation_rate'
 
-  # 社会保険料
+  # 社会保険
   require 'tax_jp/social_insurance'
+
+  # 労働保険
+  require 'tax_jp/labor_insurance'
 
   # 源泉徴収税
   require 'tax_jp/withheld_tax'
