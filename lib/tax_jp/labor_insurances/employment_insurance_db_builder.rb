@@ -11,7 +11,7 @@ class TaxJp::LaborInsurances::EmploymentInsuranceDbBuilder < TaxJp::DbBuilder
     with_database(options) do |db|
       CSV.foreach(File.join(TaxJp::Utils.data_dir, '労働保険', '雇用保険.tsv'), :col_sep => "\t") do |row|
         next if row[0].to_s.strip.empty?
-        db.execute(insert_sql, row.map)
+        db.execute(insert_sql, row)
       end
     end
   end
@@ -19,7 +19,7 @@ class TaxJp::LaborInsurances::EmploymentInsuranceDbBuilder < TaxJp::DbBuilder
   private
 
   def recreate_schema(db)
-    db.execute(TaxJp::Utils.load_file(File.join('雇用保険料', 'schema_employment_insurances.sql')))
+    db.execute(TaxJp::Utils.load_file(File.join('労働保険', 'schema_employment_insurances.sql')))
   end
 
   def insert_sql
