@@ -10,11 +10,11 @@ module TaxJp
     protected
 
     def with_database(options = {})
-      if options.fetch(:recreate, true)
-        db = recreate_schema
-      else
-        db = SQLite3::Database.new(db_path)
-      end
+      recreate = options.fetch(:recreate, true)
+
+      FileUtils.rm_f(db_path) if recreate
+      db = SQLite3::Database.new(db_path)
+      recreate_schema(db) if recreate
 
       begin
         yield db
@@ -23,7 +23,7 @@ module TaxJp
       end
     end
 
-    def recreate_schema
+    def recreate_schema(db)
       raise 'サブクラスでオーバライド'
     end
   end

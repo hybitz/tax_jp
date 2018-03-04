@@ -66,13 +66,10 @@ class TaxJp::SocialInsurances::DbBuilder < TaxJp::DbBuilder
 
   private
 
-  def recreate_schema
-    FileUtils.rm_f(@db_path)
-    db = SQLite3::Database.new(@db_path)
+  def recreate_schema(db)
     db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema_grades.sql')))
     db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema_health_insurances.sql')))
     db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema_welfare_pensions.sql')))
-    db
   end
 
   def insert_sql_grade
