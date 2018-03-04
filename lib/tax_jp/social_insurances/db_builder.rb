@@ -1,10 +1,10 @@
 require 'csv'
 require 'date'
 
-class TaxJp::SocialInsurances::DbBuilder
+class TaxJp::SocialInsurances::DbBuilder < TaxJp::DbBuilder
 
   def initialize(db_path = nil)
-    @db_path = db_path || TaxJp::SocialInsurance::DB_PATH
+    super(db_path || TaxJp::SocialInsurance::DB_PATH)
   end
 
   def run(options = {})
@@ -66,22 +66,13 @@ class TaxJp::SocialInsurances::DbBuilder
 
   private
 
-  def with_database(options = {})
-    if options.fetch(:recreate, true)
-      FileUtils.rm_f(@db_path)
-      db = SQLite3::Database.new(@db_path)
-      db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema_grades.sql')))
-      db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema_health_insurances.sql')))
-      db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema_welfare_pensions.sql')))
-    else
-      db = SQLite3::Database.new(@db_path)
-    end
-
-    begin
-      yield db
-    ensure
-      db.close
-    end
+  def recreate_schema
+    FileUtils.rm_f(@db_path)
+    db = SQLite3::Database.new(@db_path)
+    db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema_grades.sql')))
+    db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema_health_insurances.sql')))
+    db.execute(TaxJp::Utils.load_file(File.join('社会保険料', 'schema_welfare_pensions.sql')))
+    db
   end
 
   def insert_sql_grade
