@@ -1,11 +1,36 @@
 require 'csv'
 require 'date'
 
-class TaxJp::LaborInsurances::EmploymentInsuranceDbBuilder
+class TaxJp::LaborInsurances::EmploymentInsuranceDbBuilder < TaxJp::DbBuilder
 
   def initialize(db_path = nil)
-    @db_path = db_path || TaxJp::LaborInsurances::EmploymentInsurance::DB_PATH
+    super(db_path || TaxJp::LaborInsurances::EmploymentInsurance::DB_PATH)
   end
 
+  def run(options = {})
+    with_database(options) do |db|
+      CSV.foreach(File.join(TaxJp::Utils.data_dir, '労働保険', '雇用保険.tsv'), :col_sep => "\t") do |row|
+        next if row[0].to_s.strip.empty?
+        db.execute(insert_sql, row.map)
+      end
+    end
+  end
 
+  private
+
+  def recreate_schema(db)
+    db.execute(TaxJp::Utils.load_file(File.join('雇用保険料', 'schema_employment_insurances.sql')))
+  end
+
+  def insert_sql
+    columns = %w{valid_from valid_until employee_general employer_general employee_agric employer_agric employee_const employer_const}
+
+    ret = 'insert into employment_insurances ( '
+    ret << columns.join(',')
+    ret << ') values ('
+    ret << columns.map{|c| '?' }.join(',')
+    ret << ')'
+    ret
+  end
+  
 end

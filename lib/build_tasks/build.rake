@@ -4,6 +4,7 @@ require 'tax_jp/db_builder'
 require 'tax_jp/addresses/db_builder'
 require 'tax_jp/corporate_taxes/db_builder'
 require 'tax_jp/depreciation_rates/db_builder'
+require 'tax_jp/labor_insurances/employment_insurance_db_builder'
 require 'tax_jp/social_insurances/db_builder'
 require 'tax_jp/withheld_taxes/db_builder'
 
