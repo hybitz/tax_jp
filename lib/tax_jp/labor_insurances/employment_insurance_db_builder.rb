@@ -11,7 +11,10 @@ class TaxJp::LaborInsurances::EmploymentInsuranceDbBuilder < TaxJp::DbBuilder
     with_database(options) do |db|
       header = true
       CSV.foreach(File.join(TaxJp::Utils.data_dir, '労働保険', '雇用保険.tsv'), col_sep: "\t", skip_blanks: true) do |row|
-        header = false and next if header
+        if header
+          header = false
+          next
+        end
         db.execute(insert_sql, row)
       end
     end

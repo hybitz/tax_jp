@@ -24,7 +24,7 @@ class TaxJp::LaborInsurances::EmploymentInsurance
 
   def self.find_all
     TaxJp::Utils.with_database(DB_PATH) do |db|
-      sql = 'select * from employment_insurances'
+      sql = 'select * from employment_insurances order by valid_from desc'
   
       ret = []
       db.execute(sql) do |row|
