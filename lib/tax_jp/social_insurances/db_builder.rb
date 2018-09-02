@@ -13,7 +13,7 @@ class TaxJp::SocialInsurances::DbBuilder < TaxJp::DbBuilder
         valid_from, valid_until = filename_to_date(filename)
 
         CSV.foreach(filename, :col_sep => "\t") do |row|
-          next if row[0].to_i == 0
+          next if row[0].to_i == 0 and row[1].to_i == 0
           db.execute(insert_sql_grade, [valid_from, valid_until] + row.map{|col| normalize_amount(col)})
         end
       end
