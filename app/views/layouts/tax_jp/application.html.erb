@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TaxJp</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag    "tax_jp/application", media: "all" %>
+  <%= javascript_include_tag "tax_jp/application" %>
+</head>
+<body>
+
+<%= render 'layouts/tax_jp/nav' %>
+<%= yield %>
+
+</body>
+</html>

@@ -6,4 +6,4 @@ rvm:
   - 2.4.3
   - 2.3.7
 script:
-  - bundle exec rake close
+  - bundle exec rails test

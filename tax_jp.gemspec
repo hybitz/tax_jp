@@ -1,29 +1,25 @@
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'tax_jp/version'
+$:.push File.expand_path("lib", __dir__)
 
+# Maintain your gem's version:
+require "tax_jp/version"
+
+# Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name          = "tax_jp"
-  s.version       = TaxJp::VERSION
-  s.authors       = ['ichylinux', 'hyzhiro']
-  s.email         = ['ichylinux@gmail.com', 'hiroyuki@hybitz.co.jp']
-  s.summary       = %q{税金計算ライブラリ}
-  s.description   = %q{税金計算ライブラリ}
-  s.homepage      = 'https://github.com/hybitz/tax_jp'
-  s.license       = 'MIT'
+  s.name        = "tax_jp"
+  s.version     = TaxJp::VERSION
+  s.authors     = ['ichylinux', 'hyzhiro']
+  s.email       = ['ichylinux@gmail.com', 'hiroyuki.suzuki@hybitz.co.jp']
+  s.homepage    = "https://github.com/hybitz/tax_jp"
+  s.summary     = %q{税金計算ライブラリ}
+  s.description = %q{税金計算ライブラリ}
+  s.license     = "MIT"
 
-  s.files         = `git ls-files -z`.split("\x0")
-  s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
-  s.require_paths = ["lib"]
+  s.files = Dir["{app,config,data,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.required_ruby_version = '~> 2.3'
 
-  s.add_runtime_dependency 'sqlite3', '~> 1.3'
-
-  s.add_development_dependency 'bundler', '~> 1.12'
-  s.add_development_dependency 'closer', '~> 0.7'
-  s.add_development_dependency 'minitest', '~> 5.10'
-  s.add_development_dependency 'rake', '~> 12.0'
-  s.add_development_dependency 'rails', '>= 4.2', '< 6'
+  s.add_dependency 'bootstrap', '~> 4.1.3'
+  s.add_dependency 'jquery-rails', '~> 4.3.3'
+  s.add_dependency 'rails', '~> 5.2.1'
+  s.add_dependency 'sqlite3', '~> 1.3'
 end

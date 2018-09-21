@@ -13,7 +13,7 @@ module TaxJp
       end
 
       def load_yaml(filename)
-        YAML.load_file(File.join(data_dir, filename))
+        YAML.load(File.read(File.join(data_dir, filename)))
       end
 
       def load_file(filename)
