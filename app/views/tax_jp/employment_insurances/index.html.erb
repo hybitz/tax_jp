@@ -1,0 +1,35 @@
+<div class="container">
+  <table class="table table-striped table-bordered table-hover table-sm">
+    <thead class="thead-light">
+      <tr>
+        <th rowspan="2" class="align-middle">適用開始日</th>
+        <th rowspan="2" class="align-middle">適用終了日</th>
+        <th colspan="2">一般</th>
+        <th colspan="2">農林水産・清酒製造</th>
+        <th colspan="2">建設</th>
+      </tr>
+      <tr>
+        <th>労働者負担</th>
+        <th>事業主負担</th>
+        <th>労働者負担</th>
+        <th>事業主負担</th>
+        <th>労働者負担</th>
+        <th>事業主負担</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @employment_insurances.each do |ei| %>
+        <tr>
+          <td><%= ei.valid_from %></td>
+          <td><%= ei.valid_until %></td>
+          <td><%= ei.employee_general %></td>
+          <td><%= ei.employer_general %></td>
+          <td><%= ei.employee_agric %></td>
+          <td><%= ei.employer_agric %></td>
+          <td><%= ei.employee_const %></td>
+          <td><%= ei.employer_const %></td>
+        </tr>
+      <% end %>
+   </tbody> 
+  </table>
+</div>

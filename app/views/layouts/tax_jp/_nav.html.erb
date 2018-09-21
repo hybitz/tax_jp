@@ -1,3 +1,4 @@
 <nav class="nav justify-content-center">
+  <%= link_to '雇用保険料', employment_insurances_path, class: "nav-link #{controller_name == 'employment_insurances' ? 'active' : nil}" %>
   <%= link_to '減価償却率', depreciation_rates_path, class: "nav-link #{controller_name == 'depreciation_rates' ? 'active' : nil}" %>
 </nav>
