@@ -3,7 +3,7 @@ module TaxJp
   end
 
   class WithheldTax
-    DB_PATH = File.join(TaxJp::Utils.data_dir, '源泉徴収税.db')
+    MONTHLY_DB_PATH = File.join(TaxJp::Utils.data_dir, '源泉徴収税月額.db')
 
     attr_reader :valid_from, :valid_until
     attr_reader :salary_range_from, :salary_range_to
@@ -28,7 +28,7 @@ module TaxJp
 
     def self.find_by_date_and_salary(date, salary)
       date = date.strftime('%Y-%m-%d') if date.is_a?(Date)
-      with_database do |db|
+      TaxJp::Utils.with_database(MONTHLY_DB_PATH) do |db|
         sql = 'select * from withheld_taxes where valid_from <= ? and valid_until >= ? and salary_range_from <= ? and salary_range_to > ?'
 
         ret = nil
@@ -45,7 +45,7 @@ module TaxJp
 
     def self.find_all_by_date(date)
       date = date.strftime('%Y-%m-%d') if date.is_a?(Date)
-      with_database do |db|
+      TaxJp::Utils.with_database(MONTHLY_DB_PATH) do |db|
         sql = 'select * from withheld_taxes where valid_from <= ? and valid_until >= ?'
         
         ret = []
@@ -54,17 +54,6 @@ module TaxJp
         end
         
         ret.sort{|a, b| a.salary_range_from <=> b.salary_range_from }
-      end
-    end
-
-    private
-
-    def self.with_database
-      db = SQLite3::Database.new(DB_PATH)
-      begin
-        yield db
-      ensure
-        db.close
       end
     end
 
