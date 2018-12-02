@@ -58,6 +58,24 @@ module TaxJp
         end
       end
 
+      def self.find_by_date_and_dependent_and_salary(date, dependent, salary)
+        date = date.strftime('%Y-%m-%d') if date.is_a?(Date)
+        dependent = dependent.to_i
+
+        TaxJp::Utils.with_database(DB_PATH) do |db|
+          sql = "select * from bonus_withheld_taxes "
+          sql << "where valid_from <= ? and valid_until >= ? "
+          sql << "  and dependent_#{dependent}_salary_from >= ? and dependent_#{dependent}_salary_to < ?"
+          
+          ret = nil
+          db.execute(sql, [date, date, salary, salary]) do |row|
+            ret = TaxJp::WithheldTaxes::Bonus.new(row)
+          end
+        
+          ret
+        end
+      end
+
     end
   end
 end
