@@ -1,0 +1,23 @@
+create table bonus_withheld_taxes (
+  valid_from date not null,
+  valid_until date not null,
+  tax_ratio decimal(6,5) not null,
+  dependent_0_salary_from integer not null,
+  dependent_0_salary_to integer not null,
+  dependent_1_salary_from integer not null,
+  dependent_1_salary_to integer not null,
+  dependent_2_salary_from integer not null,
+  dependent_2_salary_to integer not null,
+  dependent_3_salary_from integer not null,
+  dependent_3_salary_to integer not null,
+  dependent_4_salary_from integer not null,
+  dependent_4_salary_to integer not null,
+  dependent_5_salary_from integer not null,
+  dependent_5_salary_to integer not null,
+  dependent_6_salary_from integer not null,
+  dependent_6_salary_to integer not null,
+  dependent_7_salary_from integer not null,
+  dependent_7_salary_to integer not null,
+  sub_salary_from integer not null,
+  sub_salary_to integer not null
+);

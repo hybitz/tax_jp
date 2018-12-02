@@ -3,6 +3,7 @@ module TaxJp
   end
 
   class WithheldTax
+    BONUS_DB_PATH = File.join(TaxJp::Utils.data_dir, '源泉徴収税賞与.db')
     MONTHLY_DB_PATH = File.join(TaxJp::Utils.data_dir, '源泉徴収税月額.db')
 
     attr_reader :valid_from, :valid_until

@@ -6,6 +6,7 @@ require 'tax_jp/corporate_taxes/db_builder'
 require 'tax_jp/depreciation_rates/db_builder'
 require 'tax_jp/labor_insurances/employment_insurance_db_builder'
 require 'tax_jp/social_insurances/db_builder'
+require 'tax_jp/withheld_taxes/bonus_db_builder'
 require 'tax_jp/withheld_taxes/monthly_db_builder'
 
 namespace :taxjp do
@@ -46,6 +47,8 @@ namespace :taxjp do
     task :withheld_tax do
       puts '源泉徴収税月額'
       TaxJp::WithheldTaxes::MonthlyDbBuilder.new.run
+      puts '源泉徴収税賞与'
+      TaxJp::WithheldTaxes::BonusDbBuilder.new.run
     end
 
     desc '法人税-区分番号DBを構築します。'

@@ -69,6 +69,14 @@ module TaxJp
         [valid_from.strftime('%Y-%m-%d'), valid_until.strftime('%Y-%m-%d')]
       end
 
+      def normalize_amount(amount, options = {})
+        if amount.to_s == '-'
+          ret = 2147483647
+        else
+          ret = amount.to_s.gsub(',', '').to_i
+        end
+      end
+
     end
   end
 end
