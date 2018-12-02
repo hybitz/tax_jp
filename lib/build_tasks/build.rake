@@ -45,8 +45,8 @@ namespace :taxjp do
 
     desc '源泉徴収税DBを構築します。'
     task :withheld_tax do
-#      puts '源泉徴収税月額'
-#      TaxJp::WithheldTaxes::MonthlyDbBuilder.new.run
+      puts '源泉徴収税月額'
+      TaxJp::WithheldTaxes::MonthlyDbBuilder.new.run
       puts '源泉徴収税賞与'
       TaxJp::WithheldTaxes::BonusDbBuilder.new.run
     end
