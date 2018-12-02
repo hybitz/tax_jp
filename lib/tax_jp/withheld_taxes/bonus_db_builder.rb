@@ -4,7 +4,7 @@ require 'date'
 class TaxJp::WithheldTaxes::BonusDbBuilder < TaxJp::DbBuilder
 
   def initialize(db_path = nil)
-    @db_path = db_path || TaxJp::WithheldTax::BONUS_DB_PATH
+    @db_path = db_path || TaxJp::WithheldTaxes::Bonus::DB_PATH
   end
 
   def run(options = {})
@@ -12,7 +12,8 @@ class TaxJp::WithheldTaxes::BonusDbBuilder < TaxJp::DbBuilder
       Dir.glob(File.join(TaxJp::Utils.data_dir, '源泉徴収税', '源泉徴収税賞与-*.tsv')).each do |filename|
         valid_from, valid_until = TaxJp::Utils.filename_to_date(filename)
   
-        CSV.foreach(filename, col_sep: "\t", headers: true) do |row|
+        CSV.foreach(filename, col_sep: "\t") do |row|
+          next if row[1].to_i == 0 && row[2].to_i == 0
           db.execute(insert_sql, [valid_from.to_s, valid_until.to_s] + row.map{|col| TaxJp::Utils.normalize_amount(col)})
         end
       end
@@ -28,8 +29,7 @@ class TaxJp::WithheldTaxes::BonusDbBuilder < TaxJp::DbBuilder
   def insert_sql
     ret = 'insert into bonus_withheld_taxes (valid_from, valid_until, tax_ratio, '
     8.times do |i|
-      ret << "dependent_#{i}_salary_from, "
-      ret << "dependent_#{i}_salary_to, "
+      ret << "dependent_#{i}_salary_from, dependent_#{i}_salary_to, "
     end
     ret << 'sub_salary_from, sub_salary_to) values (?, ?, ?, '
     ret << '?, ' * 16

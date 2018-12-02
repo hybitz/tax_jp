@@ -70,11 +70,20 @@ module TaxJp
       end
 
       def normalize_amount(amount, options = {})
-        if amount.to_s == '-'
+        ret = amount.to_s
+
+        if ret == '-'
           ret = 2147483647
         else
-          ret = amount.to_s.gsub(',', '').to_i
+          ret = ret.gsub(',', '')
+          if ret.index('.')
+            ret = ret.to_f
+          else
+            ret = ret.to_i
+          end
         end
+      
+        ret
       end
 
     end
