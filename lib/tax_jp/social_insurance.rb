@@ -66,7 +66,7 @@ module TaxJp
       date = TaxJp::Utils.convert_to_date(date)
       prefecture_code = convert_to_prefecture_code(prefecture)
 
-      with_database do |db|
+      TaxJp::Utils.with_database(DB_PATH) do |db|
         sql, params = base_query(date, prefecture_code)
 
         sql << 'where g.valid_from <= ? and g.valid_until >= ? '
@@ -87,7 +87,7 @@ module TaxJp
 
       ret = nil
 
-      with_database do |db|
+      TaxJp::Utils.with_database(DB_PATH) do |db|
         sql, params = base_query(date, prefecture_code)
 
         sql << 'where g.valid_from <= ? and g.valid_until >= ? and g.salary_from <= ? and g.salary_to > ? '
@@ -105,7 +105,7 @@ module TaxJp
       date = TaxJp::Utils.convert_to_date(date)
       prefecture_code = convert_to_prefecture_code(prefecture)
 
-      with_database do |db|
+      TaxJp::Utils.with_database(DB_PATH) do |db|
         sql, params = base_query(date, prefecture_code)
 
         sql << 'where g.valid_from <= ? and g.valid_until >= ? and g.pension_grade = ? '
@@ -114,6 +114,41 @@ module TaxJp
         ret = nil
         db.execute(sql, params) do |row|
           ret = TaxJp::SocialInsurance.new(row)
+        end
+        ret
+      end
+    end
+
+    def self.find_health_insurance_by_date_and_prefecture_and_salary(date, prefecture, salary)
+      date = TaxJp::Utils.convert_to_date(date)
+      prefecture_code = convert_to_prefecture_code(prefecture)
+
+      TaxJp::Utils.with_database(DB_PATH) do |db|
+        sql =  'select * from health_insurances '
+        sql << 'where valid_from <= ? and valid_until >= ? and (prefecture_code = ? or prefecture_code is null) ' 
+        params = [date, date, prefecture_code]
+
+        ret = nil
+        db.execute(sql, params) do |row|
+          ret = TaxJp::SocialInsurances::HealthInsurance.new(row)
+          ret.salary = salary
+        end
+        ret
+      end
+    end
+
+    def self.find_welfare_pension_by_date_and_salary(date, salary)
+      date = TaxJp::Utils.convert_to_date(date)
+
+      TaxJp::Utils.with_database(DB_PATH) do |db|
+        sql =  'select * from welfare_pensions '
+        sql << 'where valid_from <= ? and valid_until >= ? ' 
+        params = [date, date]
+
+        ret = nil
+        db.execute(sql, params) do |row|
+          ret = TaxJp::SocialInsurances::WelfarePension.new(row)
+          ret.salary = salary
         end
         ret
       end
@@ -129,16 +164,6 @@ module TaxJp
       return sql, params
     end
     private_class_method :base_query
-
-    def self.with_database
-      db = SQLite3::Database.new(DB_PATH)
-      begin
-        yield db
-      ensure
-        db.close
-      end
-    end
-    private_class_method :with_database
 
   end
 
