@@ -1,0 +1,60 @@
+<div class="container">
+  <%= form_with model: @finder, url: {action: 'index'}, method: 'get', class: 'form form-vertical', local: true do |f| %>
+    <div class="row">
+      <div class="col-sm-3 form-group">
+        <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+          <label for="datetimepicker1" class="pt-2 pr-2">年月日:</label>
+          <%= f.text_field :from, class: 'form-control datetimepicker-input', data: {target: '#datetimepicker4'} %>
+          <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <%= f.submit '表示', class: 'btn btn-sm btn-default mt-1' %>
+      </div>
+    </div>
+    <script>
+          $(function () {
+            $('#datetimepicker4').datetimepicker({
+              format: 'YYYY-MM-DD',
+              locale: 'ja',
+              buttons: {
+                showClose: true
+              }
+          });
+        });
+    </script>
+  <% end %>
+</div>
+<div class="pl-4 pr-4">
+  <table class="table table-striped table-bordered table-hover table-sm">
+    <thead>
+      <tr>
+        <th class="text-center">社会保険料控除後の<br/>給与範囲（以上）</th>
+        <th class="text-center">社会保険料控除後の<br/>給与範囲（未満）</th>
+        <th class="text-center">扶養親族<br/>０人</th>
+        <th class="text-center">扶養親族<br/>１人</th>
+        <th class="text-center">扶養親族<br/>２人</th>
+        <th class="text-center">扶養親族<br/>３人</th>
+        <th class="text-center">扶養親族<br/>４人</th>
+        <th class="text-center">扶養親族<br/>５人</th>
+        <th class="text-center">扶養親族<br/>６人</th>
+        <th class="text-center">扶養親族<br/>７人</th>
+        <th class="text-center">乙</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @withheld_taxes.each do |wt| %>
+        <tr>
+          <td class="text-center"><%= wt.salary_range_from.to_s(:delimited) %></td>
+          <td class="text-center"><%= wt.salary_range_to.to_s(:delimited) %></td>
+          <% 8.times do |i| %>
+            <td class="text-right"><%= wt.__send__("dependent_#{i}").to_s(:delimited) %></td>
+          <% end %>
+          <td class="text-right"><%= wt.sub_salary.to_s(:delimited) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
