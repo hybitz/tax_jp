@@ -2,29 +2,12 @@
   <%= form_with model: @finder, url: {action: 'index'}, method: 'get', class: 'form form-vertical', local: true do |f| %>
     <div class="row">
       <div class="col-sm-3 form-group">
-        <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-          <label for="datetimepicker1" class="pt-2 pr-2">年月日:</label>
-          <%= f.text_field :from, class: 'form-control datetimepicker-input', data: {target: '#datetimepicker4'} %>
-          <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
-              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-          </div>
-        </div>
+        <%= f.t_date_field :from %>
       </div>
       <div class="col">
         <%= f.submit '表示', class: 'btn btn-sm btn-default mt-1' %>
       </div>
     </div>
-    <script>
-          $(function () {
-            $('#datetimepicker4').datetimepicker({
-              format: 'YYYY-MM-DD',
-              locale: 'ja',
-              buttons: {
-                showClose: true
-              }
-          });
-        });
-    </script>
   <% end %>
 </div>
 <div class="pl-4 pr-4">

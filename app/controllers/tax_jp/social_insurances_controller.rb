@@ -5,7 +5,9 @@ module TaxJp
     before_action :preload_finder
 
     def index
-      @social_insurances = TaxJp::SocialInsurance.find_all_by_date_and_prefecture(@finder.from, '10')
+      if params[:commit]
+        @social_insurances = TaxJp::SocialInsurance.find_all_by_date_and_prefecture(@finder.from, @finder.prefecture_code)
+      end
     end
 
     private

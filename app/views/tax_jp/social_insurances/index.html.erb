@@ -2,33 +2,68 @@
   <%= form_with model: @finder, url: {action: 'index'}, method: 'get', class: 'form form-vertical', local: true do |f| %>
     <div class="row">
       <div class="col-sm-3 form-group">
-        <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-          <label for="datetimepicker1" class="pt-2 pr-2">年月日:</label>
-          <%= f.t_date_field :from %>
-        </div>
+        <%= f.t_date_field :from %>
+      </div>
+      <div class="col-sm-4 form-group form-inline">
+        <label for="finder_prefecture_code" class="pr-2">都道府県:</label>
+        <%= f.collection_select :prefecture_code, TaxJp::Prefecture.all, :code, :name, {}, class: 'form-control' %>
       </div>
       <div class="col">
         <%= f.submit '表示', class: 'btn btn-sm btn-default mt-1' %>
       </div>
     </div>
-    <script>
-          $(function () {
-            $('#datetimepicker4').datetimepicker({
-              format: 'YYYY-MM-DD',
-              locale: 'ja',
-              buttons: {
-                showClose: true
-              }
-          });
-        });
-    </script>
   <% end %>
 </div>
-<div class="pl-4 pr-4">
-  <table class="table table-striped table-bordered table-hover table-sm">
-    <thead class="thead-light">
-    </thead>
-    <tbody>
-    </tbody>  
-  </table>
-</div>
+<% if @social_insurances %>
+  <div class="pl-4 pr-4">
+    <div>
+      <span><%= @social_insurances.first.valid_from %></span>
+      <span>～</span>
+      <span><%= @social_insurances.first.valid_until %></span>
+    </div>
+    <table class="table table-striped table-bordered table-hover table-sm">
+      <thead class="thead-light">
+        <tr>
+          <th class="text-center" colspan="3">標準報酬</th>
+          <th class="text-center" colspan="2">報酬月額</th>
+          <th class="text-center" colspan="4">全国健康保険協会管掌健康保険料</th>
+          <th class="text-center" colspan="4">厚生年金保険料（厚生年金基金加入員を除く）</th>
+        </tr>
+        <tr>
+          <th class="text-center">等級</th>
+          <th class="text-center">月額</th>
+          <th class="text-center">日額</th>
+          <th class="text-center">円以上</th>
+          <th class="text-center">円未満</th>
+          <th class="text-center">全額</th>
+          <th class="text-center">折半額</th>
+          <th class="text-center"><span class="text-nowrap">全額</span> <span class="text-nowrap">（介護保険２号）</span></th>
+          <th class="text-center"><span class="text-nowrap">折半額</span> <span class="text-nowrap">（介護保険２号）</span></th>
+          <th class="text-center">全額</th>
+          <th class="text-center">折半額</th>
+          <th class="text-center"><span class="text-nowrap">全額</span> <span class="text-nowrap">（坑内員／船員）</th>
+          <th class="text-center"><span class="text-nowrap">折半額</span> <span class="text-nowrap">（坑内員／船員）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @social_insurances.each do |si| %>
+          <tr>
+            <td class="text-center"><%= si.grade.grade %><%= "(#{si.grade.pension_grade})" if si.welfare_pension.general_amount > 0 %></td>
+            <td class="text-right"><%= si.grade.monthly_standard.to_s(:delimited) %></td>
+            <td class="text-right"><%= si.grade.daily_standard.to_s(:delimited) %></td>
+            <td class="text-right"><%= si.grade.salary_from.to_s(:delimited) %></td>
+            <td class="text-right"><%= si.grade.salary_to.to_s(:delimited) if si.grade.salary_to < 2_147_483_647 %></td>
+            <td class="text-right"><%= si.health_insurance.general_amount.to_s(:delimited) %></td>
+            <td class="text-right"><%= si.health_insurance.general_amount_half.to_s(:delimited) %></td>
+            <td class="text-right"><%= si.health_insurance.general_amount_care.to_s(:delimited) %></td>
+            <td class="text-right"><%= si.health_insurance.general_amount_care_half.to_s(:delimited) %></td>
+            <td class="text-right"><%= number_to_currency(si.welfare_pension.general_amount, unit: '', precision: 2) if si.welfare_pension.general_amount > 0 %></td>
+            <td class="text-right"><%= number_to_currency(si.welfare_pension.general_amount_half, unit: '', precision: 2) if si.welfare_pension.general_amount_half > 0 %></td>
+            <td class="text-right"><%= number_to_currency(si.welfare_pension.particular_amount, unit: '', precision: 2) if si.welfare_pension.particular_amount > 0 %></td>
+            <td class="text-right"><%= number_to_currency(si.welfare_pension.particular_amount_half, unit: '', precision: 2) if si.welfare_pension.particular_amount_half > 0 %></td>
+          </tr>
+        <% end %>
+      </tbody>  
+    </table>
+  </div>
+<% end %>

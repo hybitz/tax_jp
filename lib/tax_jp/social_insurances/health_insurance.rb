@@ -34,7 +34,7 @@ class TaxJp::SocialInsurances::HealthInsurance
   end
 
   def general_amount_half
-    floor_amount(general_amount / 2)
+    (general_amount / 2).floor(1)
   end
 
   def general_amount_care
@@ -42,7 +42,7 @@ class TaxJp::SocialInsurances::HealthInsurance
   end
 
   def general_amount_care_half
-    floor_amount(general_amount_care / 2) 
+    (general_amount_care / 2).floor(1) 
   end
 
   def salary
@@ -54,10 +54,6 @@ class TaxJp::SocialInsurances::HealthInsurance
   def monthly_standard
     raise '等級が指定されていません' unless grade
     grade.grade > 0 ? grade.monthly_standard : 0
-  end
-
-  def floor_amount(amount)
-    (amount * 10).floor * 0.1
   end
 
 end

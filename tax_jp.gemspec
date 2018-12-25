@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '~> 2.3'
 
-  s.add_dependency 'bootstrap', '~> 4.1.3'
+  s.add_dependency 'bootstrap', '~> 4.2.1'
   s.add_dependency 'bootstrap4-datetime-picker-rails'
   s.add_dependency 'font-awesome-rails'
   s.add_dependency 'jquery-rails', '~> 4.3.3'

@@ -29,7 +29,7 @@ class TaxJp::SocialInsurances::WelfarePension
   end
 
   def general_amount_half
-    floor_amount(general_amount / 2)
+    (general_amount / 2).floor(2)
   end
 
   def particular_amount
@@ -37,7 +37,7 @@ class TaxJp::SocialInsurances::WelfarePension
   end
 
   def particular_amount_half
-    floor_amount(particular_amount / 2) 
+    (particular_amount / 2).floor(2) 
   end
   
   def salary
@@ -58,10 +58,6 @@ class TaxJp::SocialInsurances::WelfarePension
     return 0 if grade.pension_grade == 0
     return 0 if grade.pension_grade > 99
     grade.daily_standard
-  end
-
-  def floor_amount(amount)
-    (amount * 100).floor * 0.01
   end
 
 end
