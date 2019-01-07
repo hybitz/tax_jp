@@ -1,8 +1,23 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
   <span class="navbar-brand">TaxJP</span>
-  <%= link_to '源泉徴収税', withheld_taxes_path, class: "nav-link #{controller_name == 'withheld_taxes' ? 'active' : nil}" %>
-  <%= link_to '源泉徴収税（賞与）', bonus_withheld_taxes_path, class: "nav-link #{controller_name == 'bonus_withheld_taxes' ? 'active' : nil}" %>
-  <%= link_to '社会保険料', social_insurances_path, class: "nav-link #{controller_name == 'social_insurances' ? 'active' : nil}" %>
-  <%= link_to '雇用保険料', employment_insurances_path, class: "nav-link #{controller_name == 'employment_insurances' ? 'active' : nil}" %>
-  <%= link_to '減価償却率', depreciation_rates_path, class: "nav-link #{controller_name == 'depreciation_rates' ? 'active' : nil}" %>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item <%= 'active' if controller_name == 'withheld_taxes' %>">
+      <%= link_to '源泉徴収税', withheld_taxes_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item <%= 'active' if controller_name == 'bonus_withheld_taxes' %>">
+      <%= link_to '源泉徴収税（賞与）', bonus_withheld_taxes_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item <%= 'active' if controller_name == 'social_insurances' %>">
+      <%= link_to '社会保険料', social_insurances_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item <%= 'active' if controller_name == 'employment_insurances' %>">
+      <%= link_to '雇用保険料', employment_insurances_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item <%= 'active' if controller_name == 'consumption_taxes' %>">
+      <%= link_to '消費税', consumption_taxes_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item <%= 'active' if controller_name == 'depreciation_rates' %>">
+      <%= link_to '減価償却率', depreciation_rates_path, class: "nav-link" %>
+    </li>
+  </ul>
 </nav>

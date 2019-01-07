@@ -10,3 +10,10 @@
   national: 0.063
   local: 0.017
   total: 0.08
+2019-10-01:
+  national: 0.078
+  local: 0.022
+  total: 0.1
+  national_reduced: 0.0624
+  local_reduced: 0.0176
+  total_reduced: 0.08

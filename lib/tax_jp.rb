@@ -13,7 +13,6 @@ module TaxJp
 
   # 消費税
   require 'tax_jp/consumption_tax'
-  extend TaxJp::ConsumptionTax
 
   # 法人税-区分番号
   require 'tax_jp/corporate_tax'

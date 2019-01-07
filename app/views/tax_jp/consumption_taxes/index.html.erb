@@ -1,0 +1,32 @@
+<div class="py-2 px-4">
+  <table class="table table-striped table-bordered table-hover table-sm col">
+    <thead class="thead-light">
+      <tr>
+        <th rowspan="2" class="align-middle text-center">適用開始日</th>
+        <th colspan="3" class="text-center">標準税率</th>
+        <th colspan="3" class="text-center">軽減税率</th>
+      </tr>
+      <tr>
+        <th class="text-center">消費税率（％）</th>
+        <th class="text-center">地方消費税率（％）</th>
+        <th class="text-center">合計（％）</th>
+        <th class="text-center">消費税率（％）</th>
+        <th class="text-center">地方消費税率（％）</th>
+        <th class="text-center">合計（％）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @consumption_taxes.each do |ct| %>
+        <tr>
+          <td class="text-center"><%= ct.valid_from %></td>
+          <td class="text-center"><%= number_to_currency(ct.national_percent, unit: '', precision: 1) if ct.national_percent > 0 %></td>
+          <td class="text-center"><%= number_to_currency(ct.local_percent, unit: '', precision: 1) if ct.local_percent > 0 %></td>
+          <td class="text-center"><%= number_to_currency(ct.total_percent, unit: '') if ct.total_percent > 0 %></td>
+          <td class="text-center"></td>
+          <td class="text-center"></td>
+          <td class="text-center"></td>
+        </tr>
+      <% end %>
+   </tbody> 
+  </table>
+</div>

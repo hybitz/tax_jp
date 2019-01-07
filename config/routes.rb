@@ -1,4 +1,5 @@
 TaxJp::Engine.routes.draw do
+  resources :consumption_taxes, only: 'index'
   resources :bonus_withheld_taxes, only: 'index'
   resources :depreciation_rates, only: 'index'
   resources :employment_insurances, only: 'index'
