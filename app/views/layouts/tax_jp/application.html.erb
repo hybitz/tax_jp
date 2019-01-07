@@ -8,10 +8,12 @@
   <%= stylesheet_link_tag    "tax_jp/application", media: "all" %>
   <%= javascript_include_tag "tax_jp/application" %>
 </head>
-<body>
+<body class="taxjp">
 
 <%= render 'layouts/tax_jp/nav' %>
-<%= yield %>
+<main role="main">
+  <%= yield %>
+</main>
 
 </body>
 </html>

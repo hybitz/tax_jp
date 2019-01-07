@@ -1,4 +1,5 @@
-<nav class="nav justify-content-center">
+<nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
+  <span class="navbar-brand">TaxJP</span>
   <%= link_to '源泉徴収税', withheld_taxes_path, class: "nav-link #{controller_name == 'withheld_taxes' ? 'active' : nil}" %>
   <%= link_to '源泉徴収税（賞与）', bonus_withheld_taxes_path, class: "nav-link #{controller_name == 'bonus_withheld_taxes' ? 'active' : nil}" %>
   <%= link_to '社会保険料', social_insurances_path, class: "nav-link #{controller_name == 'social_insurances' ? 'active' : nil}" %>
