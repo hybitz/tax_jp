@@ -1,15 +1,15 @@
 <div class="container">
   <%= form_with model: @finder, url: {action: 'index'}, method: 'get', class: 'form form-vertical', local: true do |f| %>
     <div class="row">
-      <div class="col-sm-3 form-group">
+      <div class="form-group m-2">
         <%= f.t_date_field :from %>
       </div>
-      <div class="col-sm-4 form-group form-inline">
+      <div class="form-group form-inline m-2">
         <label for="finder_prefecture_code" class="pr-2">都道府県:</label>
         <%= f.collection_select :prefecture_code, TaxJp::Prefecture.all, :code, :name, {}, class: 'form-control' %>
       </div>
-      <div class="col">
-        <%= f.submit '表示', class: 'btn btn-sm btn-default mt-1' %>
+      <div class="m-2">
+        <%= f.submit '表示', class: 'btn btn-light' %>
       </div>
     </div>
   <% end %>
