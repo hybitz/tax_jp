@@ -35,6 +35,8 @@ Railsを起動
 
 ブラウザで localhost:3000/tax_jp にアクセス
 
+![トップページ](https://raw.github.com/wiki/hybitz/tax_jp/images/top.png)
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/tax_jp/fork )
