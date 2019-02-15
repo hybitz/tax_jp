@@ -7,25 +7,33 @@
 * 源泉徴収
 * 減価償却率
 
-## Installation
+## インストール
 
-Add this line to your application's Gemfile:
+Gemfile に以下の記述を追加
 
 ```ruby
 gem 'tax_jp'
 ```
 
-And then execute:
+bundle を実行
 
     $ bundle
 
-Or install it yourself as:
+## 使い方
 
-    $ gem install tax_jp
+### Rails-5.2
 
-## Usage
+routes.rb に以下の記述を追加
 
-TODO: Write usage instructions here
+```ruby
+  mount TaxJp::Engine, at: '/tax_jp', as: 'tax_jp'
+```
+
+Railsを起動
+
+    $ rails s
+
+ブラウザで localhost:3000/tax_jp にアクセス
 
 ## Contributing
 
