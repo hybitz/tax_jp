@@ -42,7 +42,11 @@ module TaxJp
         if value.is_a?(Date)
           ret = value.strftime('%Y-%m-%d')
         elsif value.is_a?(String)
-          ret = value
+          if value =~ /[0-9]{4}-[0-9]{2}-[0-9]{2}/
+            ret = value
+          else
+            raise ArgumentError.new(value)
+          end
         else
           raise TypeError.new(value.class)
         end
