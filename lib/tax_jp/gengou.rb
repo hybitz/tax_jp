@@ -5,18 +5,11 @@ module TaxJp
     @@_gengou = TaxJp::Utils.load_yaml('元号.yml')
   
     def self.to_seireki(gengou, date_jp)
-      target_gengou = nil
-      @@_gengou.invert.keys.each do |start_gengou|
-        if start_gengou == gengou.to_s
-          target_gengou = start_gengou
-          break
-        end
-      end
-
+      target_gengou = @@_gengou.invert.keys.find{|start_gengou| start_gengou == gengou.to_s }
       return nil unless target_gengou
 
-      start_year = @@_gengou.invert[target_gengou].to_i
-      return (start_year + year_jp.to_i - 1).to_s
+      start_date = @@_gengou.invert[target_gengou]
+      Date.new(start_date.year + date_jp.year - 1, date_jp.month, date_jp.day)
     end
   
     def self.to_wareki(date, only_date: false, format: '%y年%m月%d日')

@@ -1,5 +1,8 @@
 # master
 
+### 修正
+* TaxJp::Gengou#to_seireki() を修正
+
 # バージョン 1.0.0
 リリース日: 2019-04-19
 
