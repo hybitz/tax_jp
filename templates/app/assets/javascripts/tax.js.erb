@@ -8,7 +8,7 @@ tax.EXCLUSIVE = <%= TaxJp::TAX_TYPE_EXCLUSIVE %>; // 外税
 
 tax.consumptionTaxes = [
   <%- TaxJp::Utils.load_yaml('消費税.yml').reverse_each do |start_date, rate| -%>
-    {date: Date.parse('<%= start_date.strftime('%Y-%m-%d') %>'), rate: <%= rate['total'] %>},
+    {date: Date.parse('<%= start_date.strftime('%Y-%m-%d') %>'), rate: <%= rate['total'] %>, reduced_rate: <%= rate['total_reduced'] %>},
   <%- end -%>
 ];
 
@@ -20,7 +20,11 @@ tax.getRateOn = function(date, options) {
 
   var ret = 0;
   for (var i = 0; this.consumptionTaxes.length; i ++) {
-    ret = this.consumptionTaxes[i].rate;
+    if (options.reduced) {
+      ret = this.consumptionTaxes[i].reduced_rate;
+    } else {
+      ret = this.consumptionTaxes[i].rate;
+    }
     if (date >= this.consumptionTaxes[i].date) {
       break;
     }
@@ -29,7 +33,7 @@ tax.getRateOn = function(date, options) {
   if (options.percent) {
     ret *= 100;
   }
-  
+
   return ret;
 };
 
@@ -40,8 +44,7 @@ tax.calcTaxAmount = function(taxType, rate, amount) {
 
   if ( taxType == tax.INCLUSIVE ) {
     return parseInt(amount * rate / (1 + rate));
-  }
-  else if ( taxType == tax.EXCLUSIVE ) {
+  } else if ( taxType == tax.EXCLUSIVE ) {
     return parseInt(amount * rate); 
   }
 

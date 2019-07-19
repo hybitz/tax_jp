@@ -2,14 +2,23 @@
   national: 0.03
   local: 0.00
   total: 0.03
+  national_reduced: 0
+  local_reduced: 0
+  total_reduced: 0
 1997-04-01:
   national: 0.04
   local: 0.01
   total: 0.05
+  national_reduced: 0
+  local_reduced: 0
+  total_reduced: 0
 2014-04-01:
   national: 0.063
   local: 0.017
   total: 0.08
+  national_reduced: 0
+  local_reduced: 0
+  total_reduced: 0
 2019-10-01:
   national: 0.078
   local: 0.022

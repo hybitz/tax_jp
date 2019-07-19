@@ -22,9 +22,9 @@
           <td class="text-center"><%= number_to_currency(ct.national_percent, unit: '', precision: 1) if ct.national_percent > 0 %></td>
           <td class="text-center"><%= number_to_currency(ct.local_percent, unit: '', precision: 1) if ct.local_percent > 0 %></td>
           <td class="text-center"><%= number_to_currency(ct.total_percent, unit: '') if ct.total_percent > 0 %></td>
-          <td class="text-center"></td>
-          <td class="text-center"></td>
-          <td class="text-center"></td>
+          <td class="text-center"><%= number_to_currency(ct.national_reduced_percent, unit: '', precision: 2) if ct.national_reduced_percent > 0 %></td>
+          <td class="text-center"><%= number_to_currency(ct.local_reduced_percent, unit: '', precision: 2) if ct.local_reduced_percent > 0 %></td>
+          <td class="text-center"><%= number_to_currency(ct.total_reduced_percent, unit: '') if ct.total_reduced_percent > 0 %></td>
         </tr>
       <% end %>
    </tbody> 
