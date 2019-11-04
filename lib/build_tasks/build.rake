@@ -19,7 +19,7 @@ namespace :taxjp do
       TaxJp::Addresses::DbBuilder.new.run
     end
 
-    desc '消費税DBを構築します。'
+    desc '消費税スクリプトを生成します。'
     task :consumption_tax do
       puts '消費税'
       TaxJp::Utils.render 'app/assets/javascripts/tax.js'

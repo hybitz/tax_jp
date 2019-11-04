@@ -44,9 +44,9 @@ tax.calcTaxAmount = function(taxType, rate, amount) {
   }
 
   if ( taxType == tax.INCLUSIVE ) {
-    return amount - parseInt(amount / (1 + rate));
+    return amount - Math.ceil(amount / (1 + rate));
   } else if ( taxType == tax.EXCLUSIVE ) {
-    return parseInt(amount * rate); 
+    return Math.floor(amount * rate); 
   }
 
   return '';
