@@ -15,6 +15,7 @@ module TaxJp
     def preload_finder
       @finder = TaxJp::Finder.new(finder_params)
       @finder.from ||= Date.today.strftime('%Y-%m-%d')
+      @finder.prefecture_code ||= '13' # 人口の多い東京都をデフォルトに
     end
   
     def finder_params

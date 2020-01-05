@@ -52,7 +52,7 @@
             <td class="text-right"><%= si.grade.monthly_standard.to_s(:delimited) %></td>
             <td class="text-right"><%= si.grade.daily_standard.to_s(:delimited) %></td>
             <td class="text-right"><%= si.grade.salary_from.to_s(:delimited) %></td>
-            <td class="text-right"><%= si.grade.salary_to.to_s(:delimited) if si.grade.salary_to < 2_147_483_647 %></td>
+            <td class="text-right"><%= si.grade.salary_to.to_s(:delimited) if si.grade.salary_to < TaxJp::INTEGER_MAX %></td>
             <td class="text-right"><%= si.health_insurance.general_amount.to_s(:delimited) %></td>
             <td class="text-right"><%= si.health_insurance.general_amount_half.to_s(:delimited) %></td>
             <td class="text-right"><%= si.health_insurance.general_amount_care.to_s(:delimited) %></td>

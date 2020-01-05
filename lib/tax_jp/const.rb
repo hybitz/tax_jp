@@ -14,4 +14,6 @@ module TaxJp
     TAX_TYPE_EXCLUSIVE = 3 => '外税',
   }
 
+  INTEGER_MAX = 2147483647
+
 end

@@ -14,7 +14,10 @@ class TaxJp::WithheldTaxes::BonusDbBuilder < TaxJp::DbBuilder
   
         CSV.foreach(filename, col_sep: "\t") do |row|
           next if row[1].to_i == 0 && row[2].to_i == 0
-          db.execute(insert_sql, [valid_from.to_s, valid_until.to_s] + row.map{|col| TaxJp::Utils.normalize_amount(col)})
+          values = row.map{|col| TaxJp::Utils.normalize_amount(col)}
+          ratio = values.shift / 100
+          values = values.map{|value| value < TaxJp::INTEGER_MAX ? value * 1000 : value }
+          db.execute(insert_sql, [valid_from.to_s, valid_until.to_s, ratio] + values)
         end
       end
     end

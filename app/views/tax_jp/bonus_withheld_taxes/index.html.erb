@@ -39,20 +39,20 @@
     <tbody>
       <% @withheld_taxes.each do |wt| %>
         <tr>
-          <td class="text-center"><%= wt.tax_ratio_percent %></td>
+          <td class="text-center"><%= number_with_precision(wt.tax_ratio_percent, precision: 3) %></td>
           <% 8.times do |i| %>
             <%
             from = wt.__send__("dependent_#{i}_salary_from")
             to = wt.__send__("dependent_#{i}_salary_to")
-            infinite = to == 2147483647 
+            infinite = to == TaxJp::INTEGER_MAX 
             %>
-            <td class="text-right"><%= from == 2147483647 ? '-' : from.to_s(:delimited) %></td>
+            <td class="text-right"><%= from == TaxJp::INTEGER_MAX ? '-' : from.to_s(:delimited) %></td>
             <td class="<%= infinite ? 'text-center' : 'text-right' %>"><%= infinite ? '-' : to.to_s(:delimited) %></td>
           <% end %>
             <%
             from = wt.sub_salary_from
             to = wt.sub_salary_to
-            infinite = to == 2147483647 
+            infinite = to == TaxJp::INTEGER_MAX 
             %>
           <td class="text-right"><%= from.to_s(:delimited) unless from == 0 && to == 0 %></td>
           <td class="<%= infinite ? 'text-center' : 'text-right' %>"><%= infinite ? '-' : to.to_s(:delimited) unless from == 0 && to == 0 %></td>

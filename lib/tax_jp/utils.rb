@@ -77,7 +77,7 @@ module TaxJp
         ret = amount.to_s
 
         if ret == '-'
-          ret = 2147483647
+          ret = TaxJp::INTEGER_MAX
         else
           ret = ret.gsub(',', '')
           if ret.index('.')
