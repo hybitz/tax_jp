@@ -27,8 +27,10 @@ module TaxJp
         File.write(dest, ERB.new(File.read(src), 0, '-').result)
       end
 
-      def with_database(db_path)
+      def with_database(db_path, results_as_hash: false)
         db = SQLite3::Database.new(db_path)
+        db.results_as_hash = results_as_hash
+
         begin
           yield db
         ensure
