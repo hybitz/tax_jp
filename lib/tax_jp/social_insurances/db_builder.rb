@@ -14,7 +14,7 @@ class TaxJp::SocialInsurances::DbBuilder < TaxJp::DbBuilder
 
         CSV.foreach(filename, :col_sep => "\t") do |row|
           next if row[0].to_i == 0 and row[1].to_i == 0
-          db.execute(insert_sql_grade, [valid_from, valid_until] + row.map{|col| normalize_amount(col)})
+          db.execute(insert_sql_grade, [valid_from, valid_until] + row.map{|col| TaxJp::Utils.normalize_amount(col)})
         end
       end
 
@@ -103,14 +103,6 @@ class TaxJp::SocialInsurances::DbBuilder < TaxJp::DbBuilder
     ret << columns.map{|c| '?' }.join(',')
     ret << ')'
     ret
-  end
-
-  def normalize_amount(amount, options = {})
-    if amount.to_s == '-'
-      ret = 2147483647
-    else
-      ret = amount.to_s.gsub(',', '').to_i
-    end
   end
 
   def filename_to_date(filename)
