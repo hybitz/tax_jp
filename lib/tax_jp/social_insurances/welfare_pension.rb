@@ -1,10 +1,10 @@
 # 厚生年金
 class TaxJp::SocialInsurances::WelfarePension
-  attr_reader :grade
   attr_reader :valid_from, :valid_until
   attr_reader :general, :particular
   attr_reader :child_support
 
+  attr_accessor :grade
   attr_accessor :salary
 
   def initialize(attrs)
@@ -49,14 +49,12 @@ class TaxJp::SocialInsurances::WelfarePension
   def monthly_standard
     raise '等級が指定されていません' unless grade
     return 0 if grade.pension_grade == 0
-    return 0 if grade.pension_grade > 99
     grade.monthly_standard
   end
 
   def daily_standard
     raise '等級が指定されていません' unless grade
     return 0 if grade.pension_grade == 0
-    return 0 if grade.pension_grade > 99
     grade.daily_standard
   end
 
