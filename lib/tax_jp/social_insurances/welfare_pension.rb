@@ -5,9 +5,11 @@ class TaxJp::SocialInsurances::WelfarePension
   attr_reader :child_support
 
   attr_accessor :grade
-  attr_accessor :salary
+  attr_writer :salary
 
   def initialize(attrs)
+    @salary = nil
+
     if attrs.is_a?(Hash)
       @grade = attrs[:grade]
       @valid_from = attrs[:valid_from]

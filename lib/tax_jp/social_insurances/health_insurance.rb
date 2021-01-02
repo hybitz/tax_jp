@@ -6,9 +6,11 @@ class TaxJp::SocialInsurances::HealthInsurance
   attr_reader :general, :care
   attr_reader :particular, :basic
   
-  attr_accessor :salary
+  attr_writer :salary
 
   def initialize(attrs)
+    @salary = nil
+
     if attrs.is_a?(Hash)
       @grade = attrs[:grade]
       @valid_from = attrs[:valid_from]
