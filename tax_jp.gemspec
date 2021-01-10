@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'bootstrap', '~> 4.2', '>= 4.2.1'
   s.add_dependency 'bootstrap4-datetime-picker-rails'
   s.add_dependency 'font-awesome-rails'
-  s.add_dependency 'jquery-rails', '~> 4.3.3'
+  s.add_dependency 'jquery-rails', '~> 4.4'
   s.add_dependency 'rails', '~> 5.2'
   s.add_dependency 'sqlite3', '~> 1.3'
 end
