@@ -1,12 +1,10 @@
 <div class="container">
-  <%= form_with model: @finder, url: {action: 'index'}, method: 'get', class: 'form form-vertical', local: true do |f| %>
-    <div class="row">
-      <div class="form-group m-2">
-        <%= f.t_date_field :from %>
-      </div>
-      <div class="m-2">
-        <%= f.submit '表示', class: 'btn btn-light' %>
-      </div>
+  <%= form_with model: @finder, url: {action: 'index'}, method: 'get', class: 'row', local: true do |f| %>
+    <div class="col-auto my-auto">
+      <%= f.t_date_field :from %>
+    </div>
+    <div class="col-auto my-auto">
+      <%= f.submit '表示', class: 'btn btn-outline-primary' %>
     </div>
   <% end %>
 </div>
