@@ -2,7 +2,7 @@
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead class="thead-light">
       <tr>
-        <th rowspan="2" class="align-middle">耐用年数</th>
+        <th rowspan="2" class="text-center align-middle">耐用年数</th>
         <th rowspan="2" class="align-middle">定額法償却率</th>
         <th colspan="3">定率法</th>
       </tr>
@@ -15,7 +15,7 @@
     <tbody>
       <% @depreciation_rates.each do |rate| %>
         <tr>
-          <th><%= rate.durable_years %></th>
+          <th class="text-center"><%= rate.durable_years %></th>
           <td><%= rate.fixed_amount_rate %></td>
           <td><%= rate.rate %></td>
           <td><%= rate.revised_rate %></td>

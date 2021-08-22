@@ -17,7 +17,7 @@
   <% end %>
 </div>
 <% if @social_insurances %>
-  <div class="pl-4 pr-4">
+  <div class="py-2 px-4">
     <div>
       <span><%= @social_insurances.first.valid_from %></span>
       <span>～</span>
@@ -56,20 +56,20 @@
               <td class="text-center"><%= si.grade.grade %></td>
             <% end %>
 
-            <td class="text-right"><%= si.grade.monthly_standard.to_s(:delimited) %></td>
-            <td class="text-right"><%= si.grade.daily_standard.to_s(:delimited) %></td>
-            <td class="text-right"><%= si.grade.salary_from.to_s(:delimited) %></td>
-            <td class="text-right"><%= si.grade.salary_to.to_s(:delimited) if si.grade.salary_to < TaxJp::INTEGER_MAX %></td>
-            <td class="text-right"><%= si.health_insurance.general_amount.to_s(:delimited) %></td>
-            <td class="text-right"><%= si.health_insurance.general_amount_half.to_s(:delimited) %></td>
-            <td class="text-right"><%= si.health_insurance.general_amount_care.to_s(:delimited) %></td>
-            <td class="text-right"><%= si.health_insurance.general_amount_care_half.to_s(:delimited) %></td>
+            <td class="text-end"><%= si.grade.monthly_standard.to_s(:delimited) %></td>
+            <td class="text-end"><%= si.grade.daily_standard.to_s(:delimited) %></td>
+            <td class="text-end"><%= si.grade.salary_from.to_s(:delimited) %></td>
+            <td class="text-end"><%= si.grade.salary_to.to_s(:delimited) if si.grade.salary_to < TaxJp::INTEGER_MAX %></td>
+            <td class="text-end"><%= si.health_insurance.general_amount.to_s(:delimited) %></td>
+            <td class="text-end"><%= si.health_insurance.general_amount_half.to_s(:delimited) %></td>
+            <td class="text-end"><%= si.health_insurance.general_amount_care.to_s(:delimited) %></td>
+            <td class="text-end"><%= si.health_insurance.general_amount_care_half.to_s(:delimited) %></td>
 
             <% if [0, TaxJp::INTEGER_MAX].exclude?(si.grade.pension_grade) %>
-              <td class="text-right"><%= number_to_currency(si.welfare_pension.general_amount, unit: '', precision: 2) if si.welfare_pension.general_amount > 0 %></td>
-              <td class="text-right"><%= number_to_currency(si.welfare_pension.general_amount_half, unit: '', precision: 2) if si.welfare_pension.general_amount_half > 0 %></td>
-              <td class="text-right"><%= number_to_currency(si.welfare_pension.particular_amount, unit: '', precision: 2) if si.welfare_pension.particular_amount > 0 %></td>
-              <td class="text-right"><%= number_to_currency(si.welfare_pension.particular_amount_half, unit: '', precision: 2) if si.welfare_pension.particular_amount_half > 0 %></td>
+              <td class="text-end"><%= number_to_currency(si.welfare_pension.general_amount, unit: '', precision: 2) if si.welfare_pension.general_amount > 0 %></td>
+              <td class="text-end"><%= number_to_currency(si.welfare_pension.general_amount_half, unit: '', precision: 2) if si.welfare_pension.general_amount_half > 0 %></td>
+              <td class="text-end"><%= number_to_currency(si.welfare_pension.particular_amount, unit: '', precision: 2) if si.welfare_pension.particular_amount > 0 %></td>
+              <td class="text-end"><%= number_to_currency(si.welfare_pension.particular_amount_half, unit: '', precision: 2) if si.welfare_pension.particular_amount_half > 0 %></td>
             <% else %>
               <td></td>
               <td></td>
