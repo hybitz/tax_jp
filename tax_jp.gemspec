@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,data,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.required_ruby_version = '~> 2.5'
+  s.required_ruby_version = '~> 2.7'
 
   s.add_dependency 'bootstrap', '~> 5.0'
   s.add_dependency 'bootstrap4-datetime-picker-rails'
