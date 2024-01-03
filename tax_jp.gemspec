@@ -23,5 +23,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'font-awesome-rails'
   s.add_dependency 'jquery-rails', '~> 4.4'
   s.add_dependency 'rails', '~> 5.2'
-  s.add_dependency 'sqlite3', '~> 1.3'
+  s.add_dependency 'sqlite3', '~> 1.3', '< 1.7'
 end
