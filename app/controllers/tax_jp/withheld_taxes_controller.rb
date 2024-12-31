@@ -12,7 +12,7 @@ module TaxJp
     
     def preload_finder
       @finder = TaxJp::Finder.new(finder_params)
-      @finder.from ||= Date.today.strftime('%Y-%m-%d')
+      @finder.from ||= Date.today
     end
   
     def finder_params

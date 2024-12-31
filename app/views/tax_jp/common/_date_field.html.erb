@@ -1,18 +1,4 @@
-<div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+<div class="input-group">
   <label for="finder_from" class="col-form-label me-2">年月日</label>
-  <%= f.text_field method, class: 'form-control datetimepicker-input', data: {target: '#datetimepicker4'} %>
-  <div class="input-group-text" data-target="#datetimepicker4" data-toggle="datetimepicker">
-    <i class="fa fa-calendar"></i>
-  </div>
-  <script>
-        $(function () {
-          $('#datetimepicker4').datetimepicker({
-            format: 'YYYY-MM-DD',
-            locale: 'ja',
-            buttons: {
-              showClose: true
-            }
-        });
-      });
-  </script>
+  <%= f.date_field method, class: 'form-control' %>
 </div>
