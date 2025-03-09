@@ -10,6 +10,7 @@ module TaxJp
     attr_reader :salary_range_from, :salary_range_to
     attr_reader :dependent_0, :dependent_1, :dependent_2, :dependent_3, :dependent_4, :dependent_5, :dependent_6, :dependent_7
     attr_reader :sub_salary
+    attr_reader :extra_rate, :sub_extra_rate
 
     def initialize(row)
       @valid_from = row[0]
@@ -25,6 +26,8 @@ module TaxJp
       @dependent_6 = row[10]
       @dependent_7 = row[11]
       @sub_salary = row[12]
+      @extra_rate = row[13]
+      @sub_extra_rate = row[14]
     end
 
     def self.find_by_date_and_salary(date, salary)

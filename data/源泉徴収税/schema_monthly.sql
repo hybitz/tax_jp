@@ -11,5 +11,7 @@ create table withheld_taxes (
   dependent_5 integer not null,
   dependent_6 integer not null,
   dependent_7 integer not null,
-  sub_salary integer not null
+  sub_salary integer not null,
+  extra_rate decimal(6,5) not null,
+  sub_extra_rate decimal(6,5) not null
 );

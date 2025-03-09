@@ -14,7 +14,8 @@ class TaxJp::WithheldTaxes::MonthlyDbBuilder < TaxJp::DbBuilder
   
         CSV.foreach(filename, :col_sep => "\t") do |row|
           next if row[0].to_i == 0
-          db.execute(insert_sql, [valid_from.to_s, valid_until.to_s] + row.map{|col| normalize_amount(col)})
+          values = row.map{|col| TaxJp::Utils.normalize_amount(col)}
+          db.execute(insert_sql, [valid_from.to_s, valid_until.to_s] + values)
         end
       end
     end
@@ -31,12 +32,8 @@ class TaxJp::WithheldTaxes::MonthlyDbBuilder < TaxJp::DbBuilder
     8.times do |i|
       ret << "dependent_#{i}, "
     end
-    ret << 'sub_salary) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    ret << 'sub_salary, extra_rate, sub_extra_rate) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
     ret
-  end
-
-  def normalize_amount(amount)
-    amount.to_s.gsub(',', '').to_i
   end
 
 end
