@@ -13,7 +13,11 @@ module TaxJp
       end
 
       def load_yaml(filename)
-        YAML.load(File.read(File.join(data_dir, filename)))
+        if Gem::Version.new(Psych::VERSION) >= Gem::Version.new("4.0.0")
+          YAML.safe_load_file(File.join(data_dir, filename), permitted_classes: [Date])
+        else
+          YAML.safe_load(File.read(File.join(data_dir, filename)), permitted_classes: [Date])
+        end
       end
 
       def load_file(filename)
