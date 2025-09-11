@@ -6,4 +6,4 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # development dependencies will be added by default to the :development group.
 gemspec
 
-gem 'nokogiri', '< 1.16'
+gem 'nokogiri', '< 1.18'
