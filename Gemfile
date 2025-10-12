@@ -1,9 +1,14 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-# Declare your gem's dependencies in tax_jp_web.gemspec.
-# Bundler will treat runtime dependencies like base dependencies, and
-# development dependencies will be added by default to the :development group.
+# Specify your gem's dependencies in tax_jp.gemspec.
 gemspec
 
-gem 'nokogiri', '< 1.18'
+gem "puma"
+
+gem "sqlite3"
+
+gem "sprockets-rails"
+
+# Start debugger with binding.b [https://github.com/ruby/debug]
+# gem "debug", ">= 1.0.0"

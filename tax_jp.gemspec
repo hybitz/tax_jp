@@ -1,25 +1,31 @@
-$:.push File.expand_path("lib", __dir__)
+require_relative "lib/tax_jp/version"
 
-# Maintain your gem's version:
-require "tax_jp/version"
+Gem::Specification.new do |spec|
+  spec.name        = "tax_jp"
+  spec.version     = TaxJp::VERSION
+  spec.authors     = ['ichylinux', 'hyzhiro']
+  spec.email       = ['ichylinux@gmail.com', 'hiroyuki.suzuki@hybitz.co.jp']
+  spec.homepage    = "https://github.com/hybitz/tax_jp"
+  spec.summary     = %q{税金計算ライブラリ}
+  spec.description = %q{税金計算ライブラリ}
+  spec.license     = "MIT"
 
-# Describe your gem and declare its dependencies:
-Gem::Specification.new do |s|
-  s.name        = "tax_jp"
-  s.version     = TaxJp::VERSION
-  s.authors     = ['ichylinux', 'hyzhiro']
-  s.email       = ['ichylinux@gmail.com', 'hiroyuki.suzuki@hybitz.co.jp']
-  s.homepage    = "https://github.com/hybitz/tax_jp"
-  s.summary     = %q{税金計算ライブラリ}
-  s.description = %q{税金計算ライブラリ}
-  s.license     = "MIT"
+  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
+  # to allow pushing to a single host or delete this section to allow pushing to any host.
+  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
-  s.files = Dir["{app,config,data,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata["source_code_uri"] = spec.homepage
+  spec.metadata["changelog_uri"] = "https://github.com/hybitz/tax_jp/blob/master/HISTORY.md"
 
-  s.required_ruby_version = '>= 3.2', '< 3.5'
+  spec.files = Dir.chdir(File.expand_path(__dir__)) do
+    Dir["{app,config,data,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  end
 
-  s.add_dependency 'bootstrap', '~> 5.3'
-  s.add_dependency 'concurrent-ruby', '< 1.3.5'
-  s.add_dependency 'rails', '>= 6.1', '< 7.0'
-  s.add_dependency 'sqlite3', '>= 1.6', '< 2.0'
+  spec.required_ruby_version = '>= 3.2', '< 3.5'
+
+  spec.add_dependency 'bootstrap', '~> 5.3'
+  spec.add_dependency 'concurrent-ruby', '< 1.3.5'
+  spec.add_dependency 'rails', '>= 6.1', '< 8.0'
+  spec.add_dependency 'sqlite3', '>= 1.6', '< 2.0'
 end
