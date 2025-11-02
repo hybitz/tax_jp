@@ -125,7 +125,7 @@ module TaxJp
       prefecture_code = convert_to_prefecture_code(prefecture)
 
       TaxJp::Utils.with_database(DB_PATH) do |db|
-        sql =  'select * from health_insurances '
+        sql =  String.new('select * from health_insurances ')
         sql << 'where valid_from <= ? and valid_until >= ? and (prefecture_code = ? or prefecture_code is null) ' 
         params = [date, date, prefecture_code]
 
@@ -142,7 +142,7 @@ module TaxJp
       date = TaxJp::Utils.convert_to_date(date)
 
       TaxJp::Utils.with_database(DB_PATH, results_as_hash: true) do |db|
-        sql =  'select * from grades '
+        sql =  String.new('select * from grades ')
         sql << 'where valid_from <= ? and valid_until >= ? and pension_grade = ( '
         sql << '  select max(pension_grade) from grades '
         sql << '  where valid_from <= ? and valid_until >= ? and pension_grade < ? ' 
@@ -158,7 +158,7 @@ module TaxJp
       date = TaxJp::Utils.convert_to_date(date)
 
       TaxJp::Utils.with_database(DB_PATH) do |db|
-        sql =  'select * from welfare_pensions '
+        sql =  String.new('select * from welfare_pensions ')
         sql << 'where valid_from <= ? and valid_until >= ? ' 
         params = [date, date]
 
@@ -172,7 +172,7 @@ module TaxJp
     end
 
     def self.base_query(date, prefecture_code)
-      sql =  'select g.*, hi.*, wp.* from grades g '
+      sql =  String.new('select g.*, hi.*, wp.* from grades g ')
       sql << 'inner join health_insurances hi on (hi.valid_from <= ? and hi.valid_until >= ? and (hi.prefecture_code = ? or hi.prefecture_code is null)) '
       sql << 'inner join welfare_pensions wp on (wp.valid_from <= ? and wp.valid_until >= ?) '
 

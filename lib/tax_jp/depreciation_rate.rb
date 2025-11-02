@@ -25,7 +25,7 @@ module TaxJp
       date = TaxJp::Utils.convert_to_date(date)
 
       with_database do |db|
-        sql =  'select * from depreciation_rates '
+        sql =  String.new('select * from depreciation_rates ')
         sql << 'where valid_from <= ? and valid_until >= ? '
         sql << 'order by durable_years '
 
@@ -41,7 +41,7 @@ module TaxJp
       date = TaxJp::Utils.convert_to_date(date)
 
       with_database do |db|
-        sql =  'select * from depreciation_rates '
+        sql =  String.new('select * from depreciation_rates ')
         sql << 'where valid_from <= ? and valid_until >= ? '
         sql << '  and durable_years = ? '
 

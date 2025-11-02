@@ -63,7 +63,7 @@ module TaxJp
         dependent = dependent.to_i
 
         TaxJp::Utils.with_database(DB_PATH) do |db|
-          sql = "select * from bonus_withheld_taxes "
+          sql = String.new("select * from bonus_withheld_taxes ")
           sql << "where valid_from <= ? and valid_until >= ? "
           sql << "  and dependent_#{dependent}_salary_from <= ? and dependent_#{dependent}_salary_to > ?"
           

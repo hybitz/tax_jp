@@ -30,7 +30,7 @@ class TaxJp::WithheldTaxes::BonusDbBuilder < TaxJp::DbBuilder
   end
 
   def insert_sql
-    ret = 'insert into bonus_withheld_taxes (valid_from, valid_until, tax_ratio, '
+    ret = String.new('insert into bonus_withheld_taxes (valid_from, valid_until, tax_ratio, ')
     8.times do |i|
       ret << "dependent_#{i}_salary_from, dependent_#{i}_salary_to, "
     end

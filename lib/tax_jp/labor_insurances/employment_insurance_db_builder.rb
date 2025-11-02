@@ -29,7 +29,7 @@ class TaxJp::LaborInsurances::EmploymentInsuranceDbBuilder < TaxJp::DbBuilder
   def insert_sql
     columns = %w{valid_from valid_until employee_general employer_general employee_agric employer_agric employee_const employer_const}
 
-    ret = 'insert into employment_insurances ( '
+    ret = String.new('insert into employment_insurances ( ')
     ret << columns.join(',')
     ret << ') values ('
     ret << columns.map{|c| '?' }.join(',')

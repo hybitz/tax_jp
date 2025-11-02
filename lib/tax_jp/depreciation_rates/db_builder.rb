@@ -40,7 +40,7 @@ class TaxJp::DepreciationRates::DbBuilder
   def insert_sql
     columns = %w{valid_from valid_until durable_years fixed_amount_rate rate revised_rate guaranteed_rate}
 
-    ret = 'insert into depreciation_rates ( '
+    ret = String.new('insert into depreciation_rates ( ')
     ret << columns.join(',')
     ret << ') values ('
     ret << columns.map{|c| '?' }.join(',')

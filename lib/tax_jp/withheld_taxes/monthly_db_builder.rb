@@ -28,7 +28,7 @@ class TaxJp::WithheldTaxes::MonthlyDbBuilder < TaxJp::DbBuilder
   end
 
   def insert_sql
-    ret = 'insert into withheld_taxes (valid_from, valid_until, salary_range_from, salary_range_to, '
+    ret = String.new('insert into withheld_taxes (valid_from, valid_until, salary_range_from, salary_range_to, ')
     8.times do |i|
       ret << "dependent_#{i}, "
     end

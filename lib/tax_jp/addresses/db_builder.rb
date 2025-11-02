@@ -54,7 +54,7 @@ class TaxJp::Addresses::DbBuilder
   def insert_sql
     columns = %w{zip_code prefecture_code prefecture_name city section}
 
-    ret = 'insert into addresses ( '
+    ret = String.new('insert into addresses ( ')
     ret << columns.join(',')
     ret << ') values ('
     ret << columns.map{|c| '?' }.join(',')

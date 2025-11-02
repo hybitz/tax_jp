@@ -49,7 +49,7 @@ class TaxJp::CorporateTaxes::DbBuilder
   def insert_sql_applicable_item
     columns = %w{valid_from valid_until measure_name item_name item_no applicable_to}
 
-    ret = 'insert into applicable_items ( '
+    ret = String.new('insert into applicable_items ( ')
     ret << columns.join(',')
     ret << ') values ('
     ret << columns.map{|c| '?' }.join(',')

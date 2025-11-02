@@ -22,7 +22,7 @@ module TaxJp
       zip_code = TaxJp::Utils.convert_to_zip_code(zip_code)
 
       TaxJp::Utils.with_database(DB_PATH) do |db|
-        sql =  'select * from addresses '
+        sql =  String.new('select * from addresses ')
         sql << 'where zip_code = ? '
 
         ret = nil

@@ -75,7 +75,7 @@ class TaxJp::SocialInsurances::DbBuilder < TaxJp::DbBuilder
   def insert_sql_grade
     columns = %w{valid_from valid_until grade pension_grade monthly_standard daily_standard salary_from salary_to}
 
-    ret = 'insert into grades ( '
+    ret = String.new('insert into grades ( ')
     ret << columns.join(',')
     ret << ') values ('
     ret << columns.map{|c| '?' }.join(',')
@@ -86,7 +86,7 @@ class TaxJp::SocialInsurances::DbBuilder < TaxJp::DbBuilder
   def insert_sql_health_insurance
     columns = %w{valid_from valid_until prefecture_code general care particular basic}
 
-    ret = 'insert into health_insurances ( '
+    ret = String.new('insert into health_insurances ( ')
     ret << columns.join(',')
     ret << ') values ('
     ret << columns.map{|c| '?' }.join(',')
@@ -97,7 +97,7 @@ class TaxJp::SocialInsurances::DbBuilder < TaxJp::DbBuilder
   def insert_sql_welfare_pensions
     columns = %w{valid_from valid_until general particular child_support}
 
-    ret = 'insert into welfare_pensions ( '
+    ret = String.new('insert into welfare_pensions ( ')
     ret << columns.join(',')
     ret << ') values ('
     ret << columns.map{|c| '?' }.join(',')
