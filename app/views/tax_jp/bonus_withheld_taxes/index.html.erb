@@ -44,16 +44,16 @@
             to = wt.__send__("dependent_#{i}_salary_to")
             infinite = to == TaxJp::INTEGER_MAX 
             %>
-            <td class="text-end"><%= from == TaxJp::INTEGER_MAX ? '-' : from.to_s(:delimited) %></td>
-            <td class="<%= infinite ? 'text-center' : 'text-end' %>"><%= infinite ? '-' : to.to_s(:delimited) %></td>
+            <td class="text-end"><%= from == TaxJp::INTEGER_MAX ? '-' : from.to_fs(:delimited) %></td>
+            <td class="<%= infinite ? 'text-center' : 'text-end' %>"><%= infinite ? '-' : to.to_fs(:delimited) %></td>
           <% end %>
             <%
             from = wt.sub_salary_from
             to = wt.sub_salary_to
             infinite = to == TaxJp::INTEGER_MAX 
             %>
-          <td class="text-end"><%= from.to_s(:delimited) unless from == 0 && to == 0 %></td>
-          <td class="<%= infinite ? 'text-center' : 'text-end' %>"><%= infinite ? '-' : to.to_s(:delimited) unless from == 0 && to == 0 %></td>
+          <td class="text-end"><%= from.to_fs(:delimited) unless from == 0 && to == 0 %></td>
+          <td class="<%= infinite ? 'text-center' : 'text-end' %>"><%= infinite ? '-' : to.to_fs(:delimited) unless from == 0 && to == 0 %></td>
         </tr>
       <% end %>
     </tbody>  

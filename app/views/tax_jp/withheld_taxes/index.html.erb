@@ -29,11 +29,11 @@
       <% @withheld_taxes.each do |wt| %>
         <% if wt.extra_rate > 0 or wt.sub_extra_rate > 0 %>
           <tr>
-            <td class="text-center" colspan="2"><%= wt.salary_range_from.to_s(:delimited) %></td>
+            <td class="text-center" colspan="2"><%= wt.salary_range_from.to_fs(:delimited) %></td>
             <% 8.times do |i| %>
-              <td class="text-end"><%= wt.__send__("dependent_#{i}").to_s(:delimited) %></td>
+              <td class="text-end"><%= wt.__send__("dependent_#{i}").to_fs(:delimited) %></td>
             <% end %>
-            <td class="text-end"><%= wt.sub_salary.to_s(:delimited) %></td>
+            <td class="text-end"><%= wt.sub_salary.to_fs(:delimited) %></td>
           </tr>
           <tr>
             <td colspan="2"></td>
@@ -42,14 +42,14 @@
           </tr>
         <% else %>
           <tr>
-            <td class="text-center"><%= wt.salary_range_from.to_s(:delimited) %></td>
+            <td class="text-center"><%= wt.salary_range_from.to_fs(:delimited) %></td>
             <td class="text-center">
-              <%= wt.salary_range_to == TaxJp::INTEGER_MAX  ? '-' : wt.salary_range_to.to_s(:delimited) %>
+              <%= wt.salary_range_to == TaxJp::INTEGER_MAX  ? '-' : wt.salary_range_to.to_fs(:delimited) %>
             </td>
             <% 8.times do |i| %>
-              <td class="text-end"><%= wt.__send__("dependent_#{i}").to_s(:delimited) %></td>
+              <td class="text-end"><%= wt.__send__("dependent_#{i}").to_fs(:delimited) %></td>
             <% end %>
-            <td class="text-end"><%= wt.sub_salary.to_s(:delimited) %></td>
+            <td class="text-end"><%= wt.sub_salary.to_fs(:delimited) %></td>
           </tr>
         <% end %>
       <% end %>

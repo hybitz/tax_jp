@@ -56,14 +56,14 @@
               <td class="text-center"><%= si.grade.grade %></td>
             <% end %>
 
-            <td class="text-end"><%= si.grade.monthly_standard.to_s(:delimited) %></td>
-            <td class="text-end"><%= si.grade.daily_standard.to_s(:delimited) %></td>
-            <td class="text-end"><%= si.grade.salary_from.to_s(:delimited) %></td>
-            <td class="text-end"><%= si.grade.salary_to.to_s(:delimited) if si.grade.salary_to < TaxJp::INTEGER_MAX %></td>
-            <td class="text-end"><%= si.health_insurance.general_amount.to_s(:delimited) %></td>
-            <td class="text-end"><%= si.health_insurance.general_amount_half.to_s(:delimited) %></td>
-            <td class="text-end"><%= si.health_insurance.general_amount_care.to_s(:delimited) %></td>
-            <td class="text-end"><%= si.health_insurance.general_amount_care_half.to_s(:delimited) %></td>
+            <td class="text-end"><%= si.grade.monthly_standard.to_fs(:delimited) %></td>
+            <td class="text-end"><%= si.grade.daily_standard.to_fs(:delimited) %></td>
+            <td class="text-end"><%= si.grade.salary_from.to_fs(:delimited) %></td>
+            <td class="text-end"><%= si.grade.salary_to.to_fs(:delimited) if si.grade.salary_to < TaxJp::INTEGER_MAX %></td>
+            <td class="text-end"><%= si.health_insurance.general_amount.to_fs(:delimited) %></td>
+            <td class="text-end"><%= si.health_insurance.general_amount_half.to_fs(:delimited) %></td>
+            <td class="text-end"><%= si.health_insurance.general_amount_care.to_fs(:delimited) %></td>
+            <td class="text-end"><%= si.health_insurance.general_amount_care_half.to_fs(:delimited) %></td>
 
             <% if [0, TaxJp::INTEGER_MAX].exclude?(si.grade.pension_grade) %>
               <td class="text-end"><%= number_to_currency(si.welfare_pension.general_amount, unit: '', precision: 2) if si.welfare_pension.general_amount > 0 %></td>

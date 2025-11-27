@@ -9,7 +9,7 @@ class TaxJp::DepreciationRates::DbBuilder
   def run(options = {})
     with_database(options) do |db|
       Dir.glob(File.join(TaxJp::Utils.data_dir, '減価償却率', '減価償却率-*.tsv')).each do |filename|
-        valid_from, valid_until = filename_to_date(filename)
+        valid_from, valid_until = TaxJp::Utils.filename_to_date(filename)
 
         CSV.foreach(filename, :col_sep => "\t") do |row|
           next if row[0].to_i == 0
@@ -46,13 +46,6 @@ class TaxJp::DepreciationRates::DbBuilder
     ret << columns.map{|c| '?' }.join(',')
     ret << ')'
     ret
-  end
-
-  def filename_to_date(filename)
-    title, valid_from, valid_until = File.basename(filename).split('.').first.split('-')
-    valid_from = Date.strptime(valid_from, '%Y%m%d')
-    valid_until = Date.strptime(valid_until, '%Y%m%d')
-    [valid_from.strftime('%Y-%m-%d'), valid_until.strftime('%Y-%m-%d')]
   end
 
 end
