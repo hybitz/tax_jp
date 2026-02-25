@@ -21,7 +21,7 @@ bundle を実行
 
 ## 使い方
 
-### Rails-5.2
+### Rails-7.2
 
 routes.rb に以下の記述を追加
 
