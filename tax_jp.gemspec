@@ -21,7 +21,6 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 3.2', '< 3.5'
 
   spec.add_dependency 'bootstrap', '~> 5.3'
-  spec.add_dependency 'concurrent-ruby', '< 1.3.5'
   spec.add_dependency 'csv', '>= 3.2', '< 4.0'
   spec.add_dependency 'rails', '>= 7.0', '< 9.0'
   spec.add_dependency 'sqlite3', '>= 1.6', '< 2.0'
