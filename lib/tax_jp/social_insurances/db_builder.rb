@@ -45,7 +45,7 @@ class TaxJp::SocialInsurances::DbBuilder < TaxJp::DbBuilder
           values << (row[1].to_f * 0.01).round(4)
           values << (row[2].to_f * 0.01).round(4)
           values << (row[3].to_f * 0.01).round(4)
-          values << (row[3].to_f * 0.01).round(4)
+          values << (row[4].to_f * 0.01).round(4)
           db.execute(insert_sql_health_insurance, values)
         end
       end
