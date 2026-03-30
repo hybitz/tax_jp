@@ -37,7 +37,8 @@ module TaxJp
         :grade => @grade,
         :valid_from => row[15], :valid_until => row[16],
         :general => row[17], :particular => row[18],
-        :child_support => row[19])
+        :child_support => row[19],
+        :child_and_childcare_support => row[20])
     end
 
     def valid_from

@@ -95,7 +95,7 @@ class TaxJp::SocialInsurances::DbBuilder < TaxJp::DbBuilder
   end
 
   def insert_sql_welfare_pensions
-    columns = %w{valid_from valid_until general particular child_support}
+    columns = %w{valid_from valid_until general particular child_support child_and_childcare_support}
 
     ret = String.new('insert into welfare_pensions ( ')
     ret << columns.join(',')
