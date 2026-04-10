@@ -3,7 +3,6 @@ class TaxJp::SocialInsurances::WelfarePension
   attr_reader :valid_from, :valid_until
   attr_reader :general, :particular
   attr_reader :child_support
-  attr_reader :child_and_childcare_support
 
   attr_accessor :grade
   attr_writer :salary
@@ -18,14 +17,12 @@ class TaxJp::SocialInsurances::WelfarePension
       @general= attrs[:general]
       @particular= attrs[:particular]
       @child_support = attrs[:child_support]
-      @child_and_childcare_support = attrs[:child_and_childcare_support]
     elsif attrs.is_a?(Array)
       @valid_from = attrs[0]
       @valid_until = attrs[1]
       @general= attrs[2]
       @particular= attrs[3]
       @child_support = attrs[4]
-      @child_and_childcare_support = attrs[5]
     end
   end
 

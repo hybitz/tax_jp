@@ -31,14 +31,14 @@ module TaxJp
         valid_from: row[8], valid_until: row[9],
         prefecture: Prefecture.find_by_code(row[10]),
         general: row[11], care: row[12],
-        particular: row[13], basic: row[14])
+        particular: row[13], basic: row[14],
+        child_and_childcare_support: row[20])
 
       @welfare_pension = TaxJp::SocialInsurances::WelfarePension.new(
         grade: @grade,
         valid_from: row[15], valid_until: row[16],
         general: row[17], particular: row[18],
-        child_support: row[19],
-        child_and_childcare_support: row[20])
+        child_support: row[19])
     end
 
     def valid_from

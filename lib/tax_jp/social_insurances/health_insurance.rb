@@ -5,6 +5,8 @@ class TaxJp::SocialInsurances::HealthInsurance
   attr_reader :prefecture
   attr_reader :general, :care
   attr_reader :particular, :basic
+  # 子ども・子育て支援金
+  attr_reader :child_and_childcare_support
   
   attr_writer :salary
 
@@ -20,6 +22,7 @@ class TaxJp::SocialInsurances::HealthInsurance
       @care = attrs[:care]
       @particular= attrs[:particular]
       @basic = attrs[:basic]
+      @child_and_childcare_support = attrs[:child_and_childcare_support]
     elsif attrs.is_a?(Array)
       @valid_from = attrs[0]
       @valid_until = attrs[1]
@@ -28,6 +31,7 @@ class TaxJp::SocialInsurances::HealthInsurance
       @care = attrs[4]
       @particular= attrs[5]
       @basic = attrs[6]
+      @child_and_childcare_support = attrs[7]
     end
   end
 
@@ -45,6 +49,14 @@ class TaxJp::SocialInsurances::HealthInsurance
 
   def general_amount_care_half
     (general_amount_care / 2).floor(1) 
+  end
+
+  def child_and_childcare_support_amount
+    (salary * child_and_childcare_support).round(1)
+  end
+
+  def child_and_childcare_support_amount_half
+    (child_and_childcare_support_amount / 2).floor(1)
   end
 
   def salary
