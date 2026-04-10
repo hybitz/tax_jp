@@ -21,24 +21,24 @@ module TaxJp
 
     def initialize(row)
       @grade = TaxJp::SocialInsurances::Grade.new(
-        :valid_from => row[0], :valid_until => row[1],
-        :grade => row[2], :pension_grade => row[3],
-        :monthly_standard => row[4], :daily_standard => row[5],
-        :salary_from => row[6], :salary_to => row[7])
+        valid_from: row[0], valid_until: row[1],
+        grade: row[2], pension_grade: row[3],
+        monthly_standard: row[4], daily_standard: row[5],
+        salary_from: row[6], salary_to: row[7])
 
       @health_insurance = TaxJp::SocialInsurances::HealthInsurance.new(
-        :grade => @grade,
-        :valid_from => row[8], :valid_until => row[9],
-        :prefecture => Prefecture.find_by_code(row[10]),
-        :general => row[11], :care => row[12],
-        :particular => row[13], :basic => row[14])
+        grade: @grade,
+        valid_from: row[8], valid_until: row[9],
+        prefecture: Prefecture.find_by_code(row[10]),
+        general: row[11], care: row[12],
+        particular: row[13], basic: row[14])
 
       @welfare_pension = TaxJp::SocialInsurances::WelfarePension.new(
-        :grade => @grade,
-        :valid_from => row[15], :valid_until => row[16],
-        :general => row[17], :particular => row[18],
-        :child_support => row[19],
-        :child_and_childcare_support => row[20])
+        grade: @grade,
+        valid_from: row[15], valid_until: row[16],
+        general: row[17], particular: row[18],
+        child_support: row[19],
+        child_and_childcare_support: row[20])
     end
 
     def valid_from

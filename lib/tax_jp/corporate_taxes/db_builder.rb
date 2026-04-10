@@ -12,7 +12,7 @@ class TaxJp::CorporateTaxes::DbBuilder
       Dir.glob(File.join(TaxJp::Utils.data_dir, '法人税', '区分番号-*.tsv')).each do |filename|
         valid_from, valid_until = TaxJp::Utils.filename_to_date(filename)
 
-        CSV.foreach(filename, :col_sep => "\t", :headers => true) do |row|
+        CSV.foreach(filename, col_sep: "\t", headers: true) do |row|
           next if row[0].to_s.strip.empty?
 
           values = []

@@ -12,14 +12,14 @@ class TaxJp::SocialInsurances::DbBuilder < TaxJp::DbBuilder
       Dir.glob(File.join(TaxJp::Utils.data_dir, '社会保険料', '等級-*.tsv')).each do |filename|
         valid_from, valid_until = filename_to_date(filename)
 
-        CSV.foreach(filename, :col_sep => "\t") do |row|
+        CSV.foreach(filename, col_sep: "\t") do |row|
           next if row[0].to_i == 0 and row[1].to_i == 0
           db.execute(insert_sql_grade, [valid_from, valid_until] + row.map{|col| TaxJp::Utils.normalize_amount(col)})
         end
       end
 
       Dir.glob(File.join(TaxJp::Utils.data_dir, '社会保険料', '旧健康保険.tsv')).each do |filename|
-        CSV.foreach(filename, :col_sep => "\t") do |row|
+        CSV.foreach(filename, col_sep: "\t") do |row|
           next unless row[2].to_f > 0
           values = []
           values << row[0]
@@ -36,7 +36,7 @@ class TaxJp::SocialInsurances::DbBuilder < TaxJp::DbBuilder
       Dir.glob(File.join(TaxJp::Utils.data_dir, '社会保険料', '健康保険-*.tsv')).each do |filename|
         valid_from, valid_until = filename_to_date(filename)
 
-        CSV.foreach(filename, :col_sep => "\t") do |row|
+        CSV.foreach(filename, col_sep: "\t") do |row|
           next unless row[1].to_f > 0
           values = []
           values << valid_from
@@ -51,7 +51,7 @@ class TaxJp::SocialInsurances::DbBuilder < TaxJp::DbBuilder
       end
 
       Dir.glob(File.join(TaxJp::Utils.data_dir, '社会保険料', '厚生年金.tsv')).each do |filename|
-        CSV.foreach(filename, :col_sep => "\t") do |row|
+        CSV.foreach(filename, col_sep: "\t") do |row|
           next unless row[2].to_f > 0
           values = []
           values << row.shift
