@@ -126,9 +126,10 @@ module TaxJp
       prefecture_code = convert_to_prefecture_code(prefecture)
 
       TaxJp::Utils.with_database(DB_PATH) do |db|
-        sql =  String.new('select * from health_insurances ')
-        sql << 'where valid_from <= ? and valid_until >= ? and (prefecture_code = ? or prefecture_code is null) ' 
-        params = [date, date, prefecture_code]
+        sql =  String.new('select hi.*, wp.child_and_childcare_support from health_insurances hi ')
+        sql << 'inner join welfare_pensions wp on (wp.valid_from <= ? and wp.valid_until >= ?) '
+        sql << 'where hi.valid_from <= ? and hi.valid_until >= ? and (hi.prefecture_code = ? or hi.prefecture_code is null) '
+        params = [date, date, date, date, prefecture_code]
 
         ret = nil
         db.execute(sql, params) do |row|
